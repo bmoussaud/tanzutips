@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: http-whoami-ingress
+  namespace: dev
+  labels:
+    app: hello
+spec:
+  rules:
+  - host: whoami.smoke.test
+    http:
+      paths:
+      - path: /whoami
+        backend:
+          serviceName: whoami
+          servicePort: 80

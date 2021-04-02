@@ -7,7 +7,7 @@ pushd ${EXTENSION_DIR}
 pwd
 
 kubectl apply -f ingress/contour/namespace-role.yaml
-cp ingress/contour/${TARGET}/contour-data-values.yaml.example  ${EXTENSIONS}/ingress/contour/${TARGET}/contour-data-values.yaml
+cp ingress/contour/${TARGET}/contour-data-values.yaml.example  ingress/contour/${TARGET}/contour-data-values.yaml
 cat ingress/contour/${TARGET}/contour-data-values.yaml
 kubectl create secret generic contour-data-values --from-file=values.yaml=ingress/contour/${TARGET}/contour-data-values.yaml -n tanzu-system-ingress
 kubectl apply -f ingress/contour/contour-extension.yaml
