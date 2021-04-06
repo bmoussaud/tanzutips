@@ -25,5 +25,5 @@ fi
 envsubst < ./aws-cluster-template.yaml  | grep -v "#" > aws-cluster.yaml
 
 echo "create the cluster ${CLUSTER_NAME}"
-tanzu cluster create --file aws-cluster.yaml --verbose 6 
+tanzu cluster create --file aws-cluster.yaml --verbose 9 
 
