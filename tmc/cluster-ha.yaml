@@ -1,0 +1,40 @@
+#tmc cluster create --template aws-ha --account-name  bmoussaud-aws-credential --cluster-group bmoussaud --instance-type m5.large --name moussaud-ha-aws-one --region eu-west-3 --ssh-key-name tmc-keypair  --version 1.19.4-1-amazon2 --worker-node-count 3  --description "moussaud-ha-aws-one created by bmoussaud" --management-cluster-name aws-hosted --provisioner-name bmoussaud-aws --cluster-availability-zones  eu-west-3a,eu-west-3b,eu-west-3c --nodepool-availability-zone eu-west-3a --dry-run
+fullName:
+  managementClusterName: aws-hosted
+  name: moussaud-ha-aws-one
+  provisionerName: bmoussaud-aws
+meta:
+  description: moussaud-ha-aws-one created by bmoussaud
+  labels: null
+spec:
+  clusterGroupName: bmoussaud
+  tkgAws:
+    distribution:
+      provisionerCredentialName: bmoussaud-aws-credential
+      region: eu-west-3
+      version: 1.19.4-1-amazon2
+    settings:
+      security:
+        sshKey: tmc-keypair
+    topology:
+      controlPlane:
+        availabilityZones:
+        - eu-west-3a
+        - eu-west-3b
+        - eu-west-3c
+        highAvailability: true
+        instanceType: m5.large
+      nodePools:
+      - info:
+          description: default description for the nodepool
+          name: default-node-pool
+        spec:
+          tkgAws:
+            availabilityZone: eu-west-3a
+            instanceType: m5.large
+          workerNodeCount: 3
+type:
+  kind: Cluster
+  package: vmware.tanzu.manage.v1alpha1.cluster
+  version: v1alpha1
+
