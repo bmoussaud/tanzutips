@@ -1,11 +1,13 @@
-#tmc cluster create --template aws-ha --account-name  bmoussaud-aws-credential --cluster-group bmoussaud --instance-type m5.large --name moussaud-ha-aws-one --region eu-west-3 --ssh-key-name tmc-keypair  --version 1.19.4-1-amazon2 --worker-node-count 3  --description "moussaud-ha-aws-one created by bmoussaud" --management-cluster-name aws-hosted --provisioner-name bmoussaud-aws --cluster-availability-zones  eu-west-3a,eu-west-3b,eu-west-3c --nodepool-availability-zone eu-west-3a --dry-run
+#tmc cluster create --template aws-ha --account-name  bmoussaud-aws-credential --cluster-group bmoussaud --instance-type m5.large --name moussaud-ha-aws-first --region eu-west-3 --ssh-key-name tmc-keypair  --version 1.19.4-1-amazon2 --worker-node-count 3  --description "moussaud-ha-aws-first created by bmoussaud" --management-cluster-name aws-hosted --provisioner-name bmoussaud-aws --cluster-availability-zones  eu-west-3a,eu-west-3b,eu-west-3c --nodepool-availability-zone eu-west-3a --dry-run
 fullName:
   managementClusterName: aws-hosted
-  name: moussaud-ha-aws-one
+  name: bmoussaud-ha-aws-first
   provisionerName: bmoussaud-aws
 meta:
-  description: moussaud-ha-aws-one created by bmoussaud
-  labels: null
+  description: moussaud-ha-aws-first created by bmoussaud
+  labels: 
+    owner: bmoussaud
+    kind: ha
 spec:
   clusterGroupName: bmoussaud
   tkgAws:
@@ -23,7 +25,7 @@ spec:
         - eu-west-3b
         - eu-west-3c
         highAvailability: true
-        instanceType: m5.large
+        instanceType: m5.xlarge
       nodePools:
       - info:
           description: default description for the nodepool
@@ -31,7 +33,7 @@ spec:
         spec:
           tkgAws:
             availabilityZone: eu-west-3a
-            instanceType: m5.large
+            instanceType: m5.xlarge
           workerNodeCount: 3
 type:
   kind: Cluster
