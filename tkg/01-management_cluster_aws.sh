@@ -3,7 +3,7 @@
 
 # tested TKG 13/AWS
 # dependencies : bash, tanzu , envsubst, aws cli
-# CloudGate -> PowerUser
+
 export AWS_DEFAULT_REGION=eu-west-3
 
 if [[ -z "${AWS_ACCESS_KEY_ID}" ]]; then
@@ -13,11 +13,6 @@ fi
 
 if [[ -z "${AWS_SECRET_ACCESS_KEY}" ]]; then
     echo "please provide AWS_SECRET_ACCESS_KEY"
-    exit 1
-fi
-
-if [[ -z "${AWS_SESSION_TOKEN}" ]]; then
-    echo "please provide AWS_SESSION_TOKEN"
     exit 1
 fi
 
@@ -34,7 +29,7 @@ echo "create the EC2 key pair tkg-${AWS_DEFAULT_REGION}"
 aws ec2 create-key-pair --key-name tkg-${AWS_DEFAULT_REGION}
 
 echo "create the AWS roles"
-tanzu management-cluster permissions aws set  -f aws-management-cluster.yaml
+tanzu management-cluster permissions aws set -f aws-management-cluster.yaml
 
 echo "create the cluster"
 tanzu management-cluster create --file aws-management-cluster.yaml -v 6

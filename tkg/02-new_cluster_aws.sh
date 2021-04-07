@@ -17,11 +17,6 @@ if [[ -z "${AWS_SECRET_ACCESS_KEY}" ]]; then
     exit 1
 fi
 
-if [[ -z "${AWS_SESSION_TOKEN}" ]]; then
-    echo "please provide AWS_SESSION_TOKEN"
-    exit 1
-fi
-
 envsubst < ./aws-cluster-template.yaml  | grep -v "#" > aws-cluster.yaml
 
 echo "create the cluster ${CLUSTER_NAME}"
