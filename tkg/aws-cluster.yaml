@@ -1,5 +1,5 @@
 
-CLUSTER_NAME: aws-one
+CLUSTER_NAME: aws-two
 CLUSTER_PLAN: dev
 NAMESPACE: default
 CNI: antrea

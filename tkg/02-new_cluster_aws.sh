@@ -4,8 +4,8 @@
 # tested TKG 13/AWS
 # dependencies : bash, tanzu , envsubst, 
 # CloudGate -> PowerUser
-export AWS_DEFAULT_REGION=eu-west-3
-export CLUSTER_NAME="aws-one"
+export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-eu-west-3}
+export CLUSTER_NAME=${CLUSTER_NAME:-aws-one}
 
 if [[ -z "${AWS_ACCESS_KEY_ID}" ]]; then
     echo "please provide AWS_ACCESS_KEY_ID"
