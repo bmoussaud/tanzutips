@@ -14,4 +14,6 @@ delete-cluster:
 	#rm ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
 
 kubeconfig:
-	./03-kubeconfig.sh
+	echo "load the admin kubeconfig for cluster '$(CLUSTER)'"
+	tanzu cluster kubeconfig get $(CLUSTER) --admin --export-file ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
+	
