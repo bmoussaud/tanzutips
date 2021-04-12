@@ -1,10 +1,10 @@
-#tmc cluster create --template aws-ha --account-name  bmoussaud-aws-credential --cluster-group bmoussaud --instance-type m5.large --name moussaud-ha-aws-first --region eu-west-3 --ssh-key-name tmc-keypair  --version 1.19.4-1-amazon2 --worker-node-count 3  --description "moussaud-ha-aws-first created by bmoussaud" --management-cluster-name aws-hosted --provisioner-name bmoussaud-aws --cluster-availability-zones  eu-west-3a,eu-west-3b,eu-west-3c --nodepool-availability-zone eu-west-3a --dry-run
+#tmc cluster create --template aws-ha --account-name  bmoussaud-aws-credential --cluster-group bmoussaud --instance-type m5.large --name moussaud-ha-aws-next --region eu-west-3 --ssh-key-name tmc-keypair  --version 1.19.4-1-amazon2 --worker-node-count 3  --description "moussaud-ha-aws-next created by bmoussaud" --management-cluster-name aws-hosted --provisioner-name bmoussaud-aws --cluster-availability-zones  eu-west-3a,eu-west-3b,eu-west-3c --nodepool-availability-zone eu-west-3a --dry-run
 fullName:
   managementClusterName: aws-hosted
-  name: bmoussaud-ha-aws-first
+  name: bmoussaud-ha-aws-next
   provisionerName: bmoussaud-aws
 meta:
-  description: moussaud-ha-aws-first created by bmoussaud
+  description: moussaud-ha-aws-next created by bmoussaud
   labels: 
     owner: bmoussaud
     kind: ha
