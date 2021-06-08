@@ -1,5 +1,5 @@
 
-CLUSTER_NAME: aws-front
+CLUSTER_NAME: aws-tools
 CLUSTER_PLAN: dev
 NAMESPACE: default
 CNI: antrea

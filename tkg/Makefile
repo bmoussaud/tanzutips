@@ -17,3 +17,6 @@ kubeconfig:
 	echo "load the admin kubeconfig for cluster '$(CLUSTER)'"
 	tanzu cluster kubeconfig get $(CLUSTER) --admin --export-file ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
 	
+kubeconfig-mgmt:
+	echo "load the admin kubeconfig for manageentcluster "
+	tanzu management-cluster kubeconfig get --admin  --export-file  ~/.kube/config-files/kubeconfig-management.yml
