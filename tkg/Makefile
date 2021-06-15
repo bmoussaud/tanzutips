@@ -11,7 +11,7 @@ all-my-clusters:
 
 delete-cluster:
 	tanzu cluster delete $(CLUSTER) -v 6
-	#rm ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
+	rm ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
 
 kubeconfig:
 	echo "load the admin kubeconfig for cluster '$(CLUSTER)'"
