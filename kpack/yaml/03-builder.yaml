@@ -1,0 +1,18 @@
+apiVersion: kpack.io/v1alpha1
+kind: Builder
+metadata:
+  name: my-builder
+spec:
+  serviceAccount: myharbor-service-account
+  tag: harbor.mytanzu.xyz/library/builder
+  stack:
+    name: base
+    kind: ClusterStack
+  store:
+    name: default
+    kind: ClusterStore
+  order:
+  - group:
+    - id: paketo-buildpacks/java      
+  - group:
+    - id: paketo-buildpacks/nodejs
