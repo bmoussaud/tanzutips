@@ -1,0 +1,18 @@
+apiVersion: run.tanzu.vmware.com/v1alpha1
+kind: TanzuKubernetesCluster
+metadata:
+  name: dev01
+  namespace: dev
+spec: 
+  distribution:
+    version: v1.18
+  topology:
+    controlPlane:
+      count: 1
+      class: best-effort-small
+      storageClass: tanzu
+    workers:
+      count: 1
+      class: best-effort-small
+      storageClass: tanzu
+
