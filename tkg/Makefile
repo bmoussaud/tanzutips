@@ -1,7 +1,8 @@
 CLUSTER=bmoussaud-aws-one
+PROVIDER=aws
 
 create-cluster:
-	CLUSTER_NAME=$(CLUSTER) ./02-new_cluster_aws.sh
+	CLUSTER_NAME=$(CLUSTER) ./02-new_cluster_$(PROVIDER).sh
 
 get-cluster:
 	tanzu cluster get $(CLUSTER)  --disable-grouping
@@ -18,5 +19,6 @@ kubeconfig:
 	tanzu cluster kubeconfig get $(CLUSTER) --admin --export-file ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
 	
 kubeconfig-mgmt:
-	echo "load the admin kubeconfig for manageentcluster "
-	tanzu management-cluster kubeconfig get --admin  --export-file  ~/.kube/config-files/kubeconfig-management.yml
+	echo "load the admin mgmt kubeconfig for cluster '$(CLUSTER)'"
+	tanzu management-cluster kubeconfig get --admin --export-file ~/.kube/config-files/kubeconfig-$(CLUSTER).yml
+	
