@@ -1,3 +1,4 @@
 aws-management-cluster.yaml
-run.sh
 aws-cluster.yaml
+azure-cluster.yaml
+azure-management-cluster.yaml
