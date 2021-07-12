@@ -1,7 +1,7 @@
 sudo apt-get update -y
 curl -sfL https://get.k3s.io | sh -
 
-sudo k3s server &
+sudo k3s server --write-kubeconfig-mode
 # Kubeconfig is written to /etc/rancher/k3s/k3s.yaml
 mkdir ~/.kube/
 sudo cp  /etc/rancher/k3s/k3s.yaml ~/.kube/config
