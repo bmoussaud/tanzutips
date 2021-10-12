@@ -1,5 +1,5 @@
 
-CLUSTER_NAME: aws-demo
+CLUSTER_NAME: bmoussaud-aws-one
 CLUSTER_PLAN: dev
 NAMESPACE: default
 CNI: antrea

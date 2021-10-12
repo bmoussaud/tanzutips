@@ -5,7 +5,7 @@ create-cluster:
 	CLUSTER_NAME=$(CLUSTER) ./02-new_cluster_$(PROVIDER).sh
 
 get-cluster:
-	tanzu cluster get $(CLUSTER)  --disable-grouping
+	tanzu cluster get $(CLUSTER)  --show-group-members
 
 all-my-clusters:
 	tanzu cluster list
