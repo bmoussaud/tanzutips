@@ -1,0 +1,20 @@
+---
+apiVersion: vmoperator.vmware.com/v1alpha1
+classRef:
+  apiVersion: vmoperator.vmware.com/v1alpha1
+  kind: VirtualMachineClass
+  name: best-effort-small
+kind: VirtualMachineClassBinding
+metadata:
+  name: best-effort-small
+  namespace: bmoussaud
+---
+apiVersion: vmoperator.vmware.com/v1alpha1
+classRef:
+  apiVersion: vmoperator.vmware.com/v1alpha1
+  kind: VirtualMachineClass
+  name: best-effort-medium
+kind: VirtualMachineClassBinding
+metadata:
+  name: best-effort-medium
+  namespace: bmoussaud

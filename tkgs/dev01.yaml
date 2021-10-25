@@ -2,7 +2,7 @@ apiVersion: run.tanzu.vmware.com/v1alpha1
 kind: TanzuKubernetesCluster
 metadata:
   name: dev01
-  namespace: dev
+  namespace: bmoussaud
 spec: 
   distribution:
     version: v1.18
