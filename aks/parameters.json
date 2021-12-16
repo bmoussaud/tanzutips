@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "aks-east-coast-1"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "dnsPrefix": {
+            "value": "aks-east-coast-1-dns"
+        },
+        "kubernetesVersion": {
+            "value": "1.20.9"
+        },
+        "networkPlugin": {
+            "value": "kubenet"
+        },
+        "enableRBAC": {
+            "value": true
+        },
+        "enablePrivateCluster": {
+            "value": false
+        },
+        "enableHttpApplicationRouting": {
+            "value": false
+        },
+        "enableAzurePolicy": {
+            "value": false
+        },
+        "vmssNodePool": {
+            "value": true
+        },
+        "vmSize": {
+            "value": "Standard_D2_v2"
+        }
+    }
+    }
+}
