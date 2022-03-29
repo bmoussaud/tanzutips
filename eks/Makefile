@@ -11,6 +11,10 @@ create-eks-cluster:
 scale-eks-cluster:
 	eksctl scale nodegroup --cluster=$(CLUSTER_NAME) --nodes=3 --name=ng-1
 
+delete-eks-cluster:
+	eksctl delete cluster --name $(CLUSTER_NAME)
+	rm  ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yaml
+
 kubeconfig:
 	aws eks update-kubeconfig --region $(REGION)  --name $(CLUSTER_NAME) --kubeconfig ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yaml
 
