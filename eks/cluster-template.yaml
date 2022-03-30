@@ -8,13 +8,8 @@ metadata:
   region: ${REGION}
 
 nodeGroups:
-  - name: ng-1
+  - name: ng-1-workers
+    labels: { role: workers }
     instanceType: m5.xlarge
-    desiredCapacity: 2
+    desiredCapacity: 3
 
-cloudWatch:
-    clusterLogging:
-        # enable specific types of cluster control plane logs
-        enableTypes: ["audit", "authenticator", "controllerManager"]
-        # all supported types: "api", "audit", "authenticator", "controllerManager", "scheduler"
-        # supported special values: "*" and "all"
