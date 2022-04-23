@@ -10,6 +10,6 @@ metadata:
 nodeGroups:
   - name: ng-1-workers
     labels: { role: workers }
-    instanceType: m5.xlarge
-    desiredCapacity: 3
+    instanceType: ${NODE_TYPE}
+    desiredCapacity: ${NODE_NUMBER}
 
