@@ -1,6 +1,6 @@
-CLUSTER=bmoussaud-aws-tmc-7
-MANAGEMENT_CLUSTER=aws-hosted
-PROVISIONER=bmoussaud-aws
+CLUSTER=aws-usa-1
+MANAGEMENT_CLUSTER=bmoussaud-mgt-cluster
+PROVISIONER=default
 ADD_KUBECONFIG_FILES=~/.kube/config-files
 
 

@@ -4,7 +4,9 @@
 ## Create a cluster 
 
 ```shell
-make create-eks-cluster kubeconfig CLUSTER_NAME=aws-west REGION=eu-west-3
+make login
+make rg RESOURCE_GROUP=tap LOCATION=francecentral
+make create-cluster-cli kubeconfig CLUSTER_NAME=aks-west RESOURCE_GROUP=tap 
 ```
 
 ## Delete a cluster 

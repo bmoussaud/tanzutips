@@ -1,25 +1,25 @@
 fullName:
-  managementClusterName: bmoussaud-mgt-cluster-aws
-  name: bmoussaud-aws-one
+  managementClusterName: bmoussaud-mgt-cluster
+  name: tsm
   provisionerName: default
 meta:
-  description: created by the CLI
+  description: Bla
   labels: null
 spec:
   clusterGroupName: bmoussaud
   tkgAws:
     distribution:
-      provisionerCredentialName: bmoussaud-aws-credential
+      provisionerCredentialName: bmoussaud-dp
       region: eu-west-3
-      version: 1.19.4-1-amazon2
+      version: v1.20.5+vmware.2-tkg.1
     settings:
       security:
-        sshKey: tmc-keypair
+        sshKey: tkg-eu-west-3
     topology:
       controlPlane:
         availabilityZones:
         - eu-west-3a
-        instanceType: m5.large
+        instanceType: m5.xlarge
       nodePools:
       - info:
           description: default description for the nodepool
@@ -27,8 +27,8 @@ spec:
         spec:
           tkgAws:
             availabilityZone: eu-west-3a
-            instanceType: m5.large
-          workerNodeCount: 1
+            instanceType: m5.xlarge
+          workerNodeCount: 3
 type:
   kind: Cluster
   package: vmware.tanzu.manage.v1alpha1.cluster

@@ -1,0 +1,114 @@
+#! ---------------------------------------------------------------------
+#! Cluster creation basic configuration
+#! ---------------------------------------------------------------------
+
+# CLUSTER_NAME:
+CLUSTER_PLAN: dev
+NAMESPACE: default
+CNI: antrea
+
+#! ---------------------------------------------------------------------
+#! Node configuration
+#! ---------------------------------------------------------------------
+
+# SIZE:
+# CONTROLPLANE_SIZE:
+# WORKER_SIZE:
+AZURE_CONTROL_PLANE_MACHINE_TYPE: "Standard_D2s_v3"
+AZURE_NODE_MACHINE_TYPE: "Standard_D2s_v3"
+# CONTROL_PLANE_MACHINE_COUNT: 1
+WORKER_MACHINE_COUNT: 3
+# WORKER_MACHINE_COUNT_0:
+# WORKER_MACHINE_COUNT_1:
+# WORKER_MACHINE_COUNT_2:
+# AZURE_CONTROL_PLANE_DATA_DISK_SIZE_GIB : ""
+# AZURE_CONTROL_PLANE_OS_DISK_SIZE_GIB : ""
+# AZURE_CONTROL_PLANE_MACHINE_TYPE : ""
+# AZURE_CONTROL_PLANE_OS_DISK_STORAGE_ACCOUNT_TYPE : ""
+# AZURE_ENABLE_NODE_DATA_DISK : ""
+# AZURE_NODE_DATA_DISK_SIZE_GIB : ""
+# AZURE_NODE_OS_DISK_SIZE_GIB : ""
+# AZURE_NODE_MACHINE_TYPE : ""
+# AZURE_NODE_OS_DISK_STORAGE_ACCOUNT_TYPE : ""
+
+#! ---------------------------------------------------------------------
+#! Azure Configuration
+#! ---------------------------------------------------------------------
+
+AZURE_ENVIRONMENT: "AzurePublicCloud"
+AZURE_TENANT_ID: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0
+AZURE_SUBSCRIPTION_ID: cbca10bb-6ddc-45bd-8f18-c17d1dd1003f
+AZURE_CLIENT_ID: <encoded:MzFlNDJkYzktNWIxYS00MDhiLWEyYzQtM2UxZDg3MTFhNjRl>
+AZURE_CLIENT_SECRET: <encoded:M25QOFF+MUVlSlRvNE5DMkh6Z2J2ZmRfb1c3aTJTelZCb3dsTmJxTg==>
+AZURE_LOCATION: germanywestcentral
+AZURE_SSH_PUBLIC_KEY_B64: c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFDQVFEMEVkRGZGTjdNNGlrWjc2UWtya0RSNUFaTFhSMzA2RGd2VlVxTXV4T1FMaVJrdGxHSGFueWNjQ0haUEFKYVp2aVZPeGZMTTRqWks2R3ZNaGt4ck1zU1pZYWdFZVp3UEs4MldKZW9mVk9XdDJLeDJCdDZKRk50MkRIRUZvTEpSdG1MN3kzZ2NydE14K3FWcGlnQ05sMlNlbCttY01YRFhaQnRlUFVhLzlncFdGRmRRK2lTejg1UG1wT0NyZW1wczNSZk5uWWdxM2J1bXFSNVN1YlJSV3VHS3N4d0tPOXNqVjl3VFVubTJlS1JDZ01lbjRxMDllZFF5alJVOS9YWHhITDlCSkxIOXhORVd1U2xwN2xncmpIZTFVTFJwTDVaMUVZVE8vT3Q1R1JGOFhUNlJDWlVaejIyZDVaT0ZtTVVnNlVSckwzeXR5S0drY1ZQOW4yMWZsTmpXWFdOSUs2dnVUWEY1TGdyUUJ1dHpJbnMxanNUVnI3SjgvVkJ2dnFseDVpQnpOeXFmZWhVMDUxNnZWNitKVkhTY2QwYnpMRWZsWVhFcFRaQTJRRlJ0QlQ2L3FqVFoyTUlNbVdQcDNRZUFLQmlMcHJ5NldCWGswUEg1MzFUSzlQeFpzcEIyNFpkckdEUmwxTDhSVTV3WmIxQ0RuUnYvb0xneEg0Qm1ndUtPSnhSa3RpckdHNFJFdVg1MEdtVUU2b0lHUjk5YUtTVUUweCsxRXEyWjk0am5ZOU9LbTRmMytzdzgvOThWTk80aFVnb0VVT2svMmNMbHlsTGgvbDRHQ0xWeCtKazRacEo5Lyt3SVNubGM0NHpYRERJaWtXVkdSZHZtVHNDL1dYQlFQT3NxVUVXdWNjYTZRZWE3cWhmaHQ1cHhSSWNNY0JEQjcyWXN5NS9yeldxZ1E9PSBibW91c3NhdWRAbXl0YW56dWNvbW11bml0eWVkaXRpb24uY29tCg==
+# AZURE_CONTROL_PLANE_SUBNET_NAME: ""
+# AZURE_CONTROL_PLANE_SUBNET_CIDR: ""
+# AZURE_NODE_SUBNET_NAME: ""
+# AZURE_NODE_SUBNET_CIDR: ""
+# AZURE_RESOURCE_GROUP: ""
+# AZURE_VNET_RESOURCE_GROUP: ""
+# AZURE_VNET_NAME: ""
+# AZURE_VNET_CIDR: ""
+# AZURE_CUSTOM_TAGS : ""
+# AZURE_ENABLE_PRIVATE_CLUSTER : ""
+# AZURE_FRONTEND_PRIVATE_IP : ""
+# AZURE_ENABLE_ACCELERATED_NETWORKING : ""
+
+#! ---------------------------------------------------------------------
+#! Machine Health Check configuration
+#! ---------------------------------------------------------------------
+
+ENABLE_MHC: true
+MHC_UNKNOWN_STATUS_TIMEOUT: 5m
+MHC_FALSE_STATUS_TIMEOUT: 12m
+
+#! ---------------------------------------------------------------------
+#! Common configuration
+#! ---------------------------------------------------------------------
+
+# TKG_CUSTOM_IMAGE_REPOSITORY: ""
+# TKG_CUSTOM_IMAGE_REPOSITORY_CA_CERTIFICATE: ""
+
+# TKG_HTTP_PROXY: ""
+# TKG_HTTPS_PROXY: ""
+# TKG_NO_PROXY: ""
+
+ENABLE_AUDIT_LOGGING: true
+ENABLE_DEFAULT_STORAGE_CLASS: true
+
+CLUSTER_CIDR: 100.96.0.0/11
+SERVICE_CIDR: 100.64.0.0/13
+
+OS_ARCH: amd64
+OS_NAME: ubuntu
+OS_VERSION: "20.04"
+
+
+#! ---------------------------------------------------------------------
+#! Autoscaler configuration
+#! ---------------------------------------------------------------------
+
+ENABLE_AUTOSCALER: false
+# AUTOSCALER_MAX_NODES_TOTAL: "0"
+# AUTOSCALER_SCALE_DOWN_DELAY_AFTER_ADD: "10m"
+# AUTOSCALER_SCALE_DOWN_DELAY_AFTER_DELETE: "10s"
+# AUTOSCALER_SCALE_DOWN_DELAY_AFTER_FAILURE: "3m"
+# AUTOSCALER_SCALE_DOWN_UNNEEDED_TIME: "10m"
+# AUTOSCALER_MAX_NODE_PROVISION_TIME: "15m"
+# AUTOSCALER_MIN_SIZE_0:
+# AUTOSCALER_MAX_SIZE_0:
+# AUTOSCALER_MIN_SIZE_1:
+# AUTOSCALER_MAX_SIZE_1:
+# AUTOSCALER_MIN_SIZE_2:
+# AUTOSCALER_MAX_SIZE_2:
+
+#! ---------------------------------------------------------------------
+#! Antrea CNI configuration
+#! ---------------------------------------------------------------------
+
+# ANTREA_NO_SNAT: false
+# ANTREA_TRAFFIC_ENCAP_MODE: "encap"
+# ANTREA_PROXY: false
+# ANTREA_POLICY: true
+# ANTREA_TRACEFLOW: false

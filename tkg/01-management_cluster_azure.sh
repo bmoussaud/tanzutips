@@ -8,6 +8,8 @@ export AZURE_LOCATION=francecentral
 export CLUSTER_NAME=${CLUSTER_NAME:-bmoussaud-az-paris-mgt-cluster}
 export CLUSTER_RG=tkg-paris
 
+LOCAL_SSH_PUBLIC_KEY=~/.ssh/bmoussaud+azure_id_rsa.pub
+
 if [[ -z "${AZURE_SUBSCRIPTION_ID}" ]]; then
     echo "please provide AZURE_SUBSCRIPTION_ID"
     exit 1
@@ -28,7 +30,8 @@ if [[ -z "${AZURE_CLIENT_SECRET}" ]]; then
     exit 1
 fi
 
-export AZURE_SSH_PUBLIC_KEY_B64=$(cat ~/.ssh/id_rsa.pub | awk {'print $1,$2'} | base64)
+#export AZURE_SSH_PUBLIC_KEY_B64=$(cat ~/.ssh/id_rsa.pub | awk {'print $1,$2'} | base64)
+export AZURE_SSH_PUBLIC_KEY_B64=$(cat ${LOCAL_SSH_PUBLIC_KEY} | awk {'print $1,$2'} | base64)
 
 envsubst < ./azure-management-cluster-template.yaml | grep -v '""' | grep -v "#" | sort > azure-management-cluster.yaml
 

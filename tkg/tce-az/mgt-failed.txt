@@ -1,0 +1,60 @@
+~/Downloads/tcccccce
+➜ kubectl get machine  -n tkg-system  --kubeconfig /Users/benoitmoussaud/.kube-tkg/tmp/config_7b42owZl tce-mgt-cluster-control-plane-29dnc
+NAME                                  CLUSTER           NODENAME   PROVIDERID   PHASE          AGE     VERSION
+tce-mgt-cluster-control-plane-29dnc   tce-mgt-cluster                           Provisioning   6m23s   v1.22.8+vmware.1
+
+~/Downloads/tcccccce
+➜ kubectl describe machine  -n tkg-system  --kubeconfig /Users/benoitmoussaud/.kube-tkg/tmp/config_7b42owZl tce-mgt-cluster-control-plane-29dnc
+Name:         tce-mgt-cluster-control-plane-29dnc
+Namespace:    tkg-system
+Labels:       cluster.x-k8s.io/cluster-name=tce-mgt-cluster
+              cluster.x-k8s.io/control-plane=
+Annotations:  controlplane.cluster.x-k8s.io/kubeadm-cluster-configuration:
+                {"etcd":{"local":{"imageRepository":"projects.registry.vmware.com/tkg","imageTag":"v3.5.2_vmware.3","dataDir":"/var/lib/etcddisk/etcd","ex...
+API Version:  cluster.x-k8s.io/v1beta1
+Kind:         Machine
+Spec:
+  Bootstrap:
+    Config Ref:
+      API Version:     bootstrap.cluster.x-k8s.io/v1beta1
+      Kind:            KubeadmConfig
+      Name:            tce-mgt-cluster-control-plane-8fbk5
+      Namespace:       tkg-system
+      UID:             20bb8b57-40b3-4a84-ba4a-f2c0a001709e
+    Data Secret Name:  tce-mgt-cluster-control-plane-8fbk5
+  Cluster Name:        tce-mgt-cluster
+  Failure Domain:      3
+  Infrastructure Ref:
+    API Version:  infrastructure.cluster.x-k8s.io/v1beta1
+    Kind:         AzureMachine
+    Name:         tce-mgt-cluster-control-plane-5fg7m
+    Namespace:    tkg-system
+    UID:          60030b46-efba-40f9-8b8e-9cd3428f69d6
+  Version:        v1.22.8+vmware.1
+Status:
+  Bootstrap Ready:  true
+  Conditions:
+    Last Transition Time:  2022-06-09T07:25:13Z
+    Message:               1 of 2 completed
+    Reason:                VMProvisionFailed
+    Severity:              Error
+    Status:                False
+    Type:                  Ready
+    Last Transition Time:  2022-06-09T07:24:53Z
+    Status:                True
+    Type:                  BootstrapReady
+    Last Transition Time:  2022-06-09T07:31:19Z
+    Message:               failed to create virtual machine: failed to create VM tce-mgt-cluster-control-plane-5fg7m in resource group tce-azure-benoit: compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="ResourcePurchaseValidationFailed" Message="User failed validation to purchase resources. Error message: 'You have not accepted the legal terms on this subscription: 'cbca10bb-6ddc-45bd-8f18-c17d1dd1003f' for this plan. Before the subscription can be used, you need to accept the legal terms of the image. To read and accept legal terms, use the Azure CLI commands described at https://go.microsoft.com/fwlink/?linkid=2110637 or the PowerShell commands available at https://go.microsoft.com/fwlink/?linkid=862451. Alternatively, deploying via the Azure portal provides a UI experience for reading and accepting the legal terms. Offer details: publisher='vmware-inc' offer = 'tkg-capi', sku = 'k8s-1dot22dot8-ubuntu-2004', Correlation Id: '31020d04-8870-402a-8427-42e8188b30f0'.'"
+    Reason:                VMProvisionFailed
+    Severity:              Error
+    Status:                False
+    Type:                  InfrastructureReady
+    Last Transition Time:  2022-06-09T07:24:53Z
+    Reason:                WaitingForNodeRef
+    Severity:              Info
+    Status:                False
+    Type:                  NodeHealthy
+  Last Updated:            2022-06-09T07:24:53Z
+  Observed Generation:     2
+  Phase:                   Provisioning
+Events:                    <none>
