@@ -23,7 +23,10 @@ get-cluster:
 kubeconfig:
 	az aks get-credentials --resource-group $(RESOURCE_GROUP) --name $(CLUSTER_NAME) -f ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yml
 
+kubeconfig-admin:
+	az aks get-credentials --resource-group $(RESOURCE_GROUP) --name $(CLUSTER_NAME) -f ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml
+
 delete-cluster:
-	az aks delete --resource-group $(RESOURCE_GROUP) --name $(CLUSTER_NAME) &&  rm ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yml
+	az aks delete --resource-group $(RESOURCE_GROUP) --name $(CLUSTER_NAME) &&  rm ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yml && rm ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
 
 
