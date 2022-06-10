@@ -6,12 +6,12 @@
 ```shell
 make login
 make rg RESOURCE_GROUP=tap LOCATION=francecentral
-make create-cluster-cli kubeconfig CLUSTER_NAME=aks-west RESOURCE_GROUP=tap 
+make create-new-cluster CLUSTER_NAME=aks-west LOCATION=francecentral
 ```
 
 ## Delete a cluster 
 
 ```shell
-make delete-eks-cluster kubeconfig CLUSTER_NAME=aws-north REGION=eu-west-1
+make delete--cluster CLUSTER_NAME=aws-north 
 ```
 
