@@ -1,6 +1,7 @@
 
 CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
+REGISTRY_NAME=bmoussaudregistry
 
 login:
 	az login
@@ -9,7 +10,7 @@ login:
 rg:
 	az group create --location $(LOCATION) --resource-group $(CLUSTER_NAME)
 
-create-new-cluster: rg create-cluster kubeconfig grant-permission
+create-new-cluster: rg create-cluster kubeconfig kubeconfig-admin grant-permission 
 
 create-cluster: 
 	CLUSTER_NAME=$(CLUSTER_NAME) ./new_tap_cluster.sh
@@ -30,7 +31,20 @@ kubeconfig-admin:
 grant-permission: kubeconfig-admin
 	kubectl create clusterrolebinding tap-psp-rolebinding --group=system:authenticated --clusterrole=psp:privileged --kubeconfig ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
 
-delete-cluster:
-	az aks delete --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) &&  rm ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yml && rm ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
+delete-cluster: delete-cluster-cli clean-kubeconfig
 
+delete-cluster-cli: 
+	az aks delete --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) 
+
+clean-kubeconfig:
+	@-rm ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yml
+	@-rm ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
+
+registry:
+	az acr create --resource-group $(CLUSTER_NAME)  --name $(REGISTRY_NAME) --sku Standard
+
+reglogin:
+	az acr login --name $(REGISTRY_NAME)
+	
+	
 
