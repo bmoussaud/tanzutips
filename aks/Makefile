@@ -1,7 +1,8 @@
 
 CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
-REGISTRY_NAME=bmoussaudregistry
+REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 
+REGISTRY_SP_NAME=$(CLUSTER_NAME)-acr 
 
 login:
 	az login
@@ -35,16 +36,43 @@ delete-cluster: delete-cluster-cli clean-kubeconfig
 
 delete-cluster-cli: 
 	az aks delete --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) 
+	
+stop-cluster: 
+	az aks stop --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) 
+
+start-cluster: 
+	az aks start --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) 
 
 clean-kubeconfig:
 	@-rm ~/.kube/config-files/kubeconfig-$(CLUSTER_NAME).yml
 	@-rm ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
 
-registry:
-	az acr create --resource-group $(CLUSTER_NAME)  --name $(REGISTRY_NAME) --sku Standard
+create-registry:	
+	az acr create --resource-group $(CLUSTER_NAME) --name $(REGISTRY_NAME) --sku Basic
+	./create-service-principal.sh $(REGISTRY_NAME) $(REGISTRY_SP_NAME)
+	az aks update --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)   --attach-acr $(REGISTRY_NAME)
 
-reglogin:
-	az acr login --name $(REGISTRY_NAME)
+attach-registry:
+	az aks update --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)   --attach-acr $(REGISTRY_NAME)
+
+detach-registry:
+	az aks update --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)   --detach-acr  $(REGISTRY_NAME)
+
+registry-username:	
+	$(eval ACR_USER_NAME=$(shell az ad sp list --display-name $(REGISTRY_SP_NAME) --query "[].appId" --output tsv))
+	@echo ACR_USER_NAME is $(ACR_USER_NAME)
+
+delete-registry: detach-registry
+	docker logout $(strip $(REGISTRY_NAME)).azurecr.io
+	az acr delete --resource-group $(CLUSTER_NAME) --name $(REGISTRY_NAME) 
+	$(eval APP_ID=$(shell az ad sp list --display-name $(REGISTRY_SP_NAME) --query "[].appId" --output tsv))
+	@echo APP_ID IS $(APP_ID)
+	az ad sp delete --id $(APP_ID)
+	@-rm ~/.kube/acr/.$(strip $(REGISTRY_NAME))registry.config
+	
+
+	
+
 	
 	
 
