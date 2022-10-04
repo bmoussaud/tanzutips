@@ -2,7 +2,7 @@
 # This script requires Azure CLI version 2.25.0 or later. Check version with `az --version`.
 #set -x
 
-AKS_CLUSTER="aks-eu-tap-2"
+AKS_CLUSTER=$1
 ROLE="contributor"
 SERVICE_PRINCIPAL="azure-service-operator"
 

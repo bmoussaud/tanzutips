@@ -69,6 +69,8 @@ delete-registry: detach-registry
 	@echo APP_ID IS $(APP_ID)
 	az ad sp delete --id $(APP_ID)
 	@-rm ~/.kube/acr/.$(strip $(REGISTRY_NAME))registry.config
+
+
 	
 
 	
