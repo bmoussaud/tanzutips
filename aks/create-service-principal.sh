@@ -33,9 +33,9 @@ echo "docker login..."
 
 REGISTRY_FILE=~/.kube/acr/.${ACR_NAME}.config
 echo "Generate the password file"
-echo "INSTALL_REGISTRY_PASSWORD=${PASSWORD}" > ~/${REGISTRY_FILE}
-echo "INSTALL_REGISTRY_USERNAME=${USER_NAME}" >>  ~/${REGISTRY_FILE}
-echo "INSTALL_REGISTRY_HOSTNAME=${ACR_NAME}.azurecr.io" >>  ~/${REGISTRY_FILE}
+echo "export INSTALL_REGISTRY_PASSWORD=${PASSWORD}" > ~/${REGISTRY_FILE}
+echo "export INSTALL_REGISTRY_USERNAME=${USER_NAME}" >>  ~/${REGISTRY_FILE}
+echo "export INSTALL_REGISTRY_HOSTNAME=${ACR_NAME}.azurecr.io" >>  ~/${REGISTRY_FILE}
 echo "az acr login --name ${ACR_NAME}" >>  ~/${REGISTRY_FILE}
 echo "sleep 5" >>  ~/${REGISTRY_FILE}
 echo "docker login ${ACR_NAME}.azurecr.io -u ${USER_NAME} -p ${PASSWORD}" >>  ~/${REGISTRY_FILE}
