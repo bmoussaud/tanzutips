@@ -71,6 +71,10 @@ delete-registry: detach-registry
 	@-rm ~/.kube/acr/.$(strip $(REGISTRY_NAME))registry.config
 
 
+deploy-external-dns:
+	
+
+
 	
 
 	
