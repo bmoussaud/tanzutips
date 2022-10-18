@@ -5,6 +5,9 @@ export CLUSTER_NAME=${CLUSTER_NAME:-tap-demo}
 export LOCATION=${LOCATION:-germanywestcentral}
 export NODES=${NODES:-3}
 
+
+echo "Create a new cluster ${CLUSTER_NAME} in ${LOCATION} with ${NODES} nodes"
+
 az login
 az group create --location ${LOCATION} --name ${CLUSTER_NAME}
 
@@ -18,7 +21,7 @@ az provider register --namespace Microsoft.ContainerService
 
 # az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-count 4 --enable-addons monitoring --node-vm-size Standard_DS3_v2 --node-osdisk-size 500 --enable-pod-security-policy
 
-az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-count ${NODES} --enable-addons monitoring --node-vm-size standard_b4ms  --enable-pod-security-policy
+az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-count ${NODES} --node-vm-size standard_b4ms  --enable-pod-security-policy
 
 
 #az aks get-credentials --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --file ~/.kube/config-files/kubeconfig-${CLUSTER_NAME}.yml

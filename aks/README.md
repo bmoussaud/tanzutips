@@ -6,7 +6,7 @@
 ```shell
 make login
 make rg RESOURCE_GROUP=tap LOCATION=francecentral
-make create-new-cluster CLUSTER_NAME=aks-west LOCATION=francecentral
+make create-new-cluster CLUSTER_NAME=aks-eu-tap-3 LOCATION=germanywestcentral
 ```
 
 ## Delete a cluster 
