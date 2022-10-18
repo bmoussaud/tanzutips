@@ -7,15 +7,18 @@
 make login
 make rg RESOURCE_GROUP=tap LOCATION=francecentral
 make create-new-cluster CLUSTER_NAME=aks-eu-tap-3 LOCATION=germanywestcentral
+make create-registry CLUSTER_NAME=aks-eu-tap-3
 ```
 
-## Delete a cluster 
+## Delete a cluster and associate resources
 
 ```shell
 make delete-cluster CLUSTER_NAME=aws-north 
 ```
 
 ## image registry
+
+
 
 
 `````
