@@ -21,7 +21,8 @@ az provider register --namespace Microsoft.ContainerService
 
 # az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-count 4 --enable-addons monitoring --node-vm-size Standard_DS3_v2 --node-osdisk-size 500 --enable-pod-security-policy
 
-az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-count ${NODES} --node-vm-size standard_b4ms  --enable-pod-security-policy
+# --uptime-sla => Sku/Tier => Paid https://learn.microsoft.com/en-us/azure/aks/uptime-sla#creating-a-new-cluster-with-uptime-sla
+az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-count ${NODES} --uptime-sla --node-osdisk-size 100 --node-vm-size standard_b4ms  --enable-pod-security-policy --enable-addons monitoring --enable-cluster-autoscaler --min-count ${NODES} --max-count 6
 
 
 #az aks get-credentials --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --file ~/.kube/config-files/kubeconfig-${CLUSTER_NAME}.yml
