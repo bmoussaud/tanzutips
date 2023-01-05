@@ -6,9 +6,15 @@
 ```shell
 make login
 make rg RESOURCE_GROUP=tap LOCATION=francecentral
-make create-new-cluster CLUSTER_NAME=aks-eu-tap-3 LOCATION=germanywestcentral
+make create-new-cluster CLUSTER_NAME=aks-eu-tap-3 LOCATION=germanywestcentral NODE=4
 make create-registry CLUSTER_NAME=aks-eu-tap-3
+make attach-registry CLUSTER_NAME=aks-eu-tap-3
 ```
+
+```
+make create-new-cluster CLUSTER_NAME=aks-eu-tap-4 LOCATION=francecentral NODE=4
+make create-registry CLUSTER_NAME=aks-eu-tap-4
+make attach-registry CLUSTER_NAME=aks-eu-tap-4
 
 ## Delete a cluster and associate resources
 

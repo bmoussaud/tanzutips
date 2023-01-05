@@ -3,7 +3,7 @@ CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
 REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 
 REGISTRY_SP_NAME=$(CLUSTER_NAME)-acr 
-NODES=3
+NODES=4
 
 login:
 	az login
@@ -62,16 +62,17 @@ registry-username:
 	$(eval ACR_USER_NAME=$(shell az ad sp list --display-name $(REGISTRY_SP_NAME) --query "[].appId" --output tsv))
 	@echo ACR_USER_NAME is $(ACR_USER_NAME)
 
-delete-registry: detach-registry
+delete-registry: 
 	docker logout $(strip $(REGISTRY_NAME)).azurecr.io
 	az acr delete --resource-group $(CLUSTER_NAME) --name $(REGISTRY_NAME) 
 	$(eval APP_ID=$(shell az ad sp list --display-name $(REGISTRY_SP_NAME) --query "[].appId" --output tsv))
 	@echo APP_ID IS $(APP_ID)
 	az ad sp delete --id $(APP_ID)
-	@-rm ~/.kube/acr/.$(strip $(REGISTRY_NAME))registry.config
+	@-rm ~/.kube/acr/.$(strip $(REGISTRY_NAME)).config
 
+add-node-pool:
+	az aks nodepool add --resource-group $(CLUSTER_NAME) --cluster-name $(CLUSTER_NAME) --name poolone --node-count 3 --node-vm-size standard_b4ms --mode System --no-wait 
 
-deploy-external-dns:
 	
 
 
