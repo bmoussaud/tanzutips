@@ -1,7 +1,7 @@
 # EKS
 
 
-## Create a cluster 
+## Create a cluster     
 
 ```shell
 make login

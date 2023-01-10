@@ -15,7 +15,7 @@ rg:
 create-new-cluster: rg create-cluster kubeconfig-admin grant-permission 
 
 create-cluster: 
-	CLUSTER_NAME=$(CLUSTER_NAME) NODES=$(NODES) ./new_tap_cluster.sh
+	CLUSTER_NAME=$(CLUSTER_NAME) NODES=$(NODES) LOCATION=$(LOCATION) ./new_tap_cluster.sh
 
 create-cluster-cli: 	
 	az aks create --network-plugin="azure" --network-policy="calico" --node-count 3 --enable-cluster-autoscaler --enable-managed-identity --name="$(CLUSTER_NAME)" --resource-group "$(CLUSTER_NAME)"
@@ -72,6 +72,17 @@ delete-registry:
 
 add-node-pool:
 	az aks nodepool add --resource-group $(CLUSTER_NAME) --cluster-name $(CLUSTER_NAME) --name poolone --node-count 3 --node-vm-size standard_b4ms --mode System --no-wait 
+
+RESOURCE_GROUP="mytanzu.xyz"	
+VAULT_NAME="vault-micropets"
+create-keyvault:		
+	az keyvault create --name $(VAULT_NAME) --resource-group $(RESOURCE_GROUP) --enable-rbac-authorization
+	./create-service-principal-keyvault.sh $(VAULT_NAME)
+
+delete-keyvault:
+	az keyvault delete --name $(VAULT_NAME) --resource-group $(RESOURCE_GROUP)
+	rm ~/.azure/rbac/$(VAULT_NAME).yaml
+
 
 	
 

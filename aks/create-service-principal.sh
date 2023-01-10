@@ -29,7 +29,6 @@ USER_NAME=$(az ad sp list --display-name $SERVICE_PRINCIPAL_NAME --query "[].app
 # applications to authenticate to the container registry.
 echo "Service principal ID: [${USER_NAME}]"
 echo "Service principal password: [${PASSWORD}]"
-echo "docker login..."
 
 REGISTRY_FILE=~/.kube/acr/.${ACR_NAME}.config
 echo "Generate the password file"
