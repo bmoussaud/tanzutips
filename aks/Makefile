@@ -3,7 +3,6 @@ CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
 REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 
 REGISTRY_SP_NAME=$(CLUSTER_NAME)-acr 
-NODES=4
 
 login:
 	az login
@@ -15,7 +14,7 @@ rg:
 create-new-cluster: rg create-cluster kubeconfig-admin grant-permission 
 
 create-cluster: 
-	CLUSTER_NAME=$(CLUSTER_NAME) NODES=$(NODES) LOCATION=$(LOCATION) ./new_tap_cluster.sh
+	CLUSTER_NAME=$(CLUSTER_NAME) LOCATION=$(LOCATION) ./new_tap_cluster.sh
 
 create-cluster-cli: 	
 	az aks create --network-plugin="azure" --network-policy="calico" --node-count 3 --enable-cluster-autoscaler --enable-managed-identity --name="$(CLUSTER_NAME)" --resource-group "$(CLUSTER_NAME)"
