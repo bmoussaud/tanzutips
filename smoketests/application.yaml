@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: whoami
-        image: containous/whoami
+        image: docker.io/containous/whoami
         ports:
         - containerPort: 80
       imagePullSecrets:
