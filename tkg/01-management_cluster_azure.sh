@@ -16,12 +16,19 @@ if [[ -z "${AZURE_SUBSCRIPTION_ID}" ]]; then
     exit 1
 fi
 
+echo "-- Accept the Base Image License"
+az vm image terms accept --publisher vmware-inc --offer tkg-capi-2022-06-24 --plan k8s-1dot23dot10-ubuntu-2004 --subscription AZURE_SUBSCRIPTION_ID
+
+
 echo "--- Create a service principal"
 AZURE_TENANT_ID=`az account list --query '[?isDefault].tenantId' -o tsv`
 echo "----  AZURE_TENANT_ID ${AZURE_TENANT_ID}"
 AZURE_ROLE=Owner
 AZURE_ROLE_NAME="BMOUSSAUD_TKG_${AZURE_ROLE}_for_${RESSOURCE_GROUP}"
+echo "AZURE_ROLE_NAME ${AZURE_ROLE_NAME}"
+exit 1
 export AZURE_CLIENT_SECRET=`az ad sp create-for-rbac --name "${AZURE_ROLE_NAME}" --role $AZURE_ROLE --query 'password' -o tsv --scopes /subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${RESSOURCE_GROUP}` 
+az role assignment create --assignee APP-ID --role "Owner"
 echo "----  AZURE_CLIENT_SECRET ${AZURE_CLIENT_SECRET}"
 export AZURE_CLIENT_ID=`az ad sp list --display-name "${AZURE_ROLE_NAME}" --query '[0].appId' -o tsv`
 echo "----  AZURE_CLIENT_ID ${AZURE_CLIENT_ID}"
