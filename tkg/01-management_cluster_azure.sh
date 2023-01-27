@@ -30,9 +30,9 @@ export AZURE_CLIENT_SECRET=`az ad sp create-for-rbac --name "${AZURE_ROLE_NAME}"
 echo "----  AZURE_CLIENT_SECRET ${AZURE_CLIENT_SECRET}"
 export AZURE_CLIENT_ID=`az ad sp list --display-name "${AZURE_ROLE_NAME}" --query '[0].appId' -o tsv`
 echo "----  AZURE_CLIENT_ID ${AZURE_CLIENT_ID}"
+echo "Role assignment  Owner to ${AZURE_CLIENT_ID}"
 az role assignment create --assignee ${AZURE_CLIENT_ID} --role "Owner"
-
-
+echo "/Role assignment  Owner to ${AZURE_CLIENT_ID}"
 
 if [[ -z "${AZURE_CLIENT_ID}" ]]; then
     echo "please provide AZURE_CLIENT_ID"
