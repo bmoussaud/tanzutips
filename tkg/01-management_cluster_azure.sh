@@ -32,6 +32,8 @@ export AZURE_CLIENT_ID=`az ad sp list --display-name "${AZURE_ROLE_NAME}" --quer
 echo "----  AZURE_CLIENT_ID ${AZURE_CLIENT_ID}"
 az role assignment create --assignee ${AZURE_CLIENT_ID} --role "Owner"
 
+
+
 if [[ -z "${AZURE_CLIENT_ID}" ]]; then
     echo "please provide AZURE_CLIENT_ID"
     exit 1
