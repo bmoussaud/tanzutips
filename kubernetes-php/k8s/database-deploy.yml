@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: production-db
+  template:
+    metadata:
+      name: mydb-pod
+      labels:
+        env: production-db
+    spec:
+      volumes:
+        - name: db-vol
+          persistentVolumeClaim:
+            claimName: db-pvc
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: database
+          image: mysql:8.0
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: db-vol
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "my-secret-123azer"

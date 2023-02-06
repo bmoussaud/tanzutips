@@ -1,0 +1,8 @@
+[[build.env]]
+name='BP_PHP_SERVER'
+value='httpd'
+
+[stack]
+  id = "io.buildpacks.stacks.bionic"
+  build-image = "paketobuildpacks/build:full-cnb"
+  run-image = "paketobuildpacks/run:full-cnb"

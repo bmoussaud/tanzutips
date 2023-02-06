@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myphp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: production-frontend
+  template:
+    metadata:
+      name: myfrontend-pod
+      labels:
+        env: production-frontend
+    spec:
+      volumes:
+        - name: front-vol
+          persistentVolumeClaim:
+            claimName: frontend-pvc
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: frontend
+          image: docker.io/bmoussaud/myphpapp
+          env:
+            - name: PORT
+              value: "8080"
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: front-vol
