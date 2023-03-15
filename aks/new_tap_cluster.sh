@@ -3,7 +3,7 @@ set -x
 export CLUSTER_NAME=${CLUSTER_NAME:-tap-demo}
 #az account list-locations
 export LOCATION=${LOCATION:-germanywestcentral}
-export NODES=${NODES:-3}
+export NODES=${NODES:-4}
 export VM_SIZE=${VM_SIZE:-Standard_D8s_v3}
 
 

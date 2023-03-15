@@ -16,6 +16,8 @@ make create-new-cluster CLUSTER_NAME=aks-eu-tap-4 LOCATION=francecentral NODE=4
 make create-registry CLUSTER_NAME=aks-eu-tap-4
 make attach-registry CLUSTER_NAME=aks-eu-tap-4
 
+make new-instance CLUSTER_NAME=aks-eu-tap-5 LOCATION=francecentral NODE=4
+
 ## Delete a cluster and associate resources
 
 ```shell

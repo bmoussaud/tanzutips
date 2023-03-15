@@ -4,12 +4,15 @@ LOCATION=francecentral
 REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 
 REGISTRY_SP_NAME=$(CLUSTER_NAME)-acr 
 
+
 login:
 	az login
 	az account set --subscription cbca10bb-6ddc-45bd-8f18-c17d1dd1003f
 
 rg:
 	az group create --location $(LOCATION) --resource-group $(CLUSTER_NAME)
+
+new-instance: create-new-cluster create-registry attach-registry 
 
 create-new-cluster: rg create-cluster kubeconfig-admin grant-permission 
 
