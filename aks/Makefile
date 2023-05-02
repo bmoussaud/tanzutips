@@ -1,4 +1,4 @@
-
+# https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.5/tap/install-azure-resources.html
 CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
 REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 

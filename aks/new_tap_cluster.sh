@@ -28,5 +28,5 @@ az aks create --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --node-cou
 
 #az aks get-credentials --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --file ~/.kube/config-files/kubeconfig-${CLUSTER_NAME}.yml
 #az aks get-credentials --admin --resource-group ${CLUSTER_NAME} --name ${CLUSTER_NAME} --file ~/.kube/config-files/kubeconfig-admin-${CLUSTER_NAME}.yml
-
+# az aks update -g myResourceGroup -n myAKSCluster --enable-oidc-issuer
 #KUBECONFIG=~/.kube/config-files/kubeconfig-admin-${CLUSTER_NAME}.yml kubectl create clusterrolebinding tap-psp-rolebinding --group=system:authenticated --clusterrole=psp:privileged
