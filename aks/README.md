@@ -18,6 +18,8 @@ make attach-registry CLUSTER_NAME=aks-eu-tap-4
 
 make new-instance CLUSTER_NAME=aks-eu-tap-5 LOCATION=francecentral NODE=4
 
+make new-instance CLUSTER_NAME=aks-eu-tap-6 LOCATION=francecentral
+
 ## Delete a cluster and associate resources
 
 ```shell

@@ -3,7 +3,7 @@ CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
 REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 
 REGISTRY_SP_NAME=$(CLUSTER_NAME)-acr 
-
+KUBERNETES_VERSION=1.25.6
 
 login:
 	az login
@@ -12,15 +12,14 @@ login:
 rg:
 	az group create --location $(LOCATION) --resource-group $(CLUSTER_NAME)
 
-new-instance: create-new-cluster create-registry attach-registry 
+new-instance: rg create-cluster create-registry kubeconfig-admin
 
-create-new-cluster: rg create-cluster kubeconfig-admin grant-permission 
+delete-instance: 
+	
 
-create-cluster: 
-	CLUSTER_NAME=$(CLUSTER_NAME) LOCATION=$(LOCATION) ./new_tap_cluster.sh
-
-create-cluster-cli: 	
-	az aks create --network-plugin="azure" --network-policy="calico" --node-count 3 --enable-cluster-autoscaler --enable-managed-identity --name="$(CLUSTER_NAME)" --resource-group "$(CLUSTER_NAME)"
+# --uptime-sla Message: Base managed cluster SKU name is invalid. 'Basic' has been replaced by 'Base' since v2023-02-01.
+create-cluster: 	
+	az aks create -g $(CLUSTER_NAME) -n $(CLUSTER_NAME) --enable-managed-identity --node-count 4 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --node-vm-size Standard_D4as_v4 --kubernetes-version $(KUBERNETES_VERSION)
 
 get-cluster:
 	az aks show --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)
@@ -52,7 +51,6 @@ clean-kubeconfig:
 create-registry:	
 	az acr create --resource-group $(CLUSTER_NAME) --name $(REGISTRY_NAME) --sku Basic
 	./create-service-principal.sh $(REGISTRY_NAME) $(REGISTRY_SP_NAME)
-	az aks update --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)   --attach-acr $(REGISTRY_NAME)
 
 attach-registry:
 	az aks update --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)   --attach-acr $(REGISTRY_NAME)
