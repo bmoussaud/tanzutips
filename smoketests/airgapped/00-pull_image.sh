@@ -1,0 +1,1 @@
+ imgpkg copy --image traefik/whoami --to-tar traefik-whoami.tar
