@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami-deployment
+  annotations:
+    ako.vmware.com/enable-tls: "true"
+  labels:
+    app: whoami
+spec:
+  ingressClassName: avi-lb
+  rules:
+    - host: "whoami.testline.tanzu"
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: whoami-deployment
+                port:
+                  number: 80
