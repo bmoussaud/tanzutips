@@ -1,1 +1,1 @@
- imgpkg copy --image docker.io:traefik/whoami --to-tar traefik-whoami.tar
+ imgpkg copy --image docker.io/traefik/whoami --to-tar traefik-whoami.tar
