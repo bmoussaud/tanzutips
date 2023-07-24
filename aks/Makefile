@@ -19,7 +19,7 @@ delete-instance:
 
 # --uptime-sla Message: Base managed cluster SKU name is invalid. 'Basic' has been replaced by 'Base' since v2023-02-01.
 create-cluster: 	
-	az aks create -g $(CLUSTER_NAME) -n $(CLUSTER_NAME) --enable-managed-identity --node-count 4 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --node-vm-size Standard_D4as_v4 --kubernetes-version $(KUBERNETES_VERSION)
+	az aks create -g $(CLUSTER_NAME) -n $(CLUSTER_NAME) --enable-managed-identity --node-count 6 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --node-vm-size Standard_D4as_v4 --kubernetes-version $(KUBERNETES_VERSION)
 
 get-cluster:
 	az aks show --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)
