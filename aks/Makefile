@@ -15,11 +15,12 @@ rg:
 new-instance: rg create-cluster create-registry kubeconfig-admin
 
 delete-instance: 
-	
+	az aks delete -g $(CLUSTER_NAME) -n $(CLUSTER_NAME)
 
 # --uptime-sla Message: Base managed cluster SKU name is invalid. 'Basic' has been replaced by 'Base' since v2023-02-01.
 create-cluster: 	
-	az aks create -g $(CLUSTER_NAME) -n $(CLUSTER_NAME) --enable-managed-identity --node-count 6 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --node-vm-size Standard_D4as_v4 --kubernetes-version $(KUBERNETES_VERSION)
+	az aks create -g $(CLUSTER_NAME) -n $(CLUSTER_NAME) --enable-managed-identity --node-count 4 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --node-vm-size Standard_D8as_v4 --kubernetes-version $(KUBERNETES_VERSION) 
+
 
 get-cluster:
 	az aks show --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)
@@ -33,9 +34,9 @@ kubeconfig-admin:
 grant-permission: kubeconfig-admin
 	kubectl create clusterrolebinding tap-psp-rolebinding --group=system:authenticated --clusterrole=psp:privileged --kubeconfig ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
 
-delete-cluster: delete-cluster-cli clean-kubeconfig
+delete-cluster: delete-instance clean-kubeconfig
 
-delete-cluster-cli: 
+delete-rg-cli: 
 	az aks delete --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) 
 	
 stop-cluster: 
