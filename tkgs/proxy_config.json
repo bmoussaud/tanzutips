@@ -1,0 +1,13 @@
+{
+  "cluster_proxy_config": {
+    "proxy_settings_source": "CLUSTER_CONFIGURED",
+    "http_proxy_config": "http://10.214.182.91:3128",
+    "https_proxy_config": "http://10.214.182.91:3128",
+    "no_proxy_config": [
+      "10.214.182.0/16",
+      "192.168.39.0/20",
+      "10.220.0.0/20",
+      "10.96.0.0/16"
+    ]
+  }
+}

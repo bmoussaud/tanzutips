@@ -3,7 +3,7 @@ set -x
 vc_address="10.214.182.33"
 cluster_id="domain-c8"
 username="administrator@vsphere.local"
-password="xxxxxxxxxRGd"
+password="TRUC\$Z0vVarKRGd"
 
 session_id=$(curl -ksX POST --user "${username}:${password}" https://${vc_address}/api/session | xargs -t)
 echo "SESSION ID is ${session_id}"
@@ -11,8 +11,12 @@ echo "CLUSTER URL  https://${vc_address}/api/vcenter/namespace-management/cluste
 echo "Initial state"
 curl -k -X GET -H "vmware-api-session-id: ${session_id}" https://${vc_address}/api/vcenter/namespace-management/clusters/${cluster_id} | jq
 
+exit 1
+cat proxy_config.json | jq
 
-curl -k -X PATCH -H "vmware-api-session-id: ${session_id}" -H "Content-Type: application/json" -d '{ "cluster_proxy_config": { "proxy_settings_source": "CLUSTER_CONFIGURED", "http_proxy_config":"http://myproxy.svc:1234" } }' https://${vc_address}/api/vcenter/namespace-management/clusters/${cluster_id}
+curl -k -X PATCH -H "vmware-api-session-id: ${session_id}" -H "Content-Type: application/json" -d @proxy_config.json https://${vc_address}/api/vcenter/namespace-management/clusters/${cluster_id}
 echo "New state"
 curl -k -X GET -H "vmware-api-session-id: ${session_id}" https://${vc_address}/api/vcenter/namespace-management/clusters/${cluster_id} | jq
+
+#curl -k -X PATCH -H "vmware-api-session-id: ${session_id}" -H "Content-Type: application/json" -d '{ "cluster_proxy_config": { "proxy_settings_source": "VC_INHERITED" } }' https://${vc_address}/api/vcenter/namespace-management/clusters/${cluster_id}
 
