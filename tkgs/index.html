@@ -1,0 +1,2190 @@
+
+<script>
+  function checkValue(str, max) {
+    if (str.charAt(0) !== '0' || str == '00') {
+      var num = parseInt(str);
+      if (isNaN(num) || num <= 0 || num > max) num = 1;
+      str = num > parseInt(max.toString().charAt(0)) && num.toString().length == 1 ? '0' + num : num.toString();
+    };
+    return str;
+  };
+
+
+  function date_reformat_dd(date) {
+    date.addEventListener('input', function(e) {
+      this.type = 'text';
+      var input = this.value;
+      if (/\D\/$/.test(input)) input = input.substr(0, input.length - 3);
+      var values = input.split('/').map(function(v) {
+        return v.replace(/\D/g, '')
+      });
+      if (values[1]) values[1] = checkValue(values[1], 12);
+      if (values[0]) values[0] = checkValue(values[0], 31);
+      var output = values.map(function(v, i) {
+        return v.length == 2 && i < 2 ? v + '/' : v;
+      });
+      this.value = output.join('').substr(0, 14);
+    });
+  }
+</script>
+<html lang="fr">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+  <meta charset="utf-8">
+  <title>Site officiel unique de télépaiement | Amendes.gouv.fr</title>
+  <meta name="description" content="Seul site gouvernemental de paiement en ligne des amendes émises par les autorités françaises et comportant une référence de télépaiement.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preload" href="assets/fonts/open-sans/open-sans-regular.html" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="assets/fonts/open-sans/open-sans-bold.html" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="icon" type="image/x-icon" href="favicon.html">
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      font-family: 'opensans', Arial, sans-serif;
+      background-color: #fff;
+    }
+
+    #loading {
+      display: none;
+    }
+
+    #loading>div:first-child {
+      font-size: 24px;
+    }
+
+    noscript p:first-child {
+      font-size: 19px;
+    }
+
+    noscript p:last-child>a {
+      color: #0b6ba8;
+    }
+
+    #skip-link {
+      overflow: auto;
+      background: #272729;
+    }
+
+    #skip-link a {
+      display: block;
+      position: absolute !important;
+      clip: rect(1px 1px 1px 1px);
+      clip: rect(1px, 1px, 1px, 1px);
+      overflow: hidden;
+      height: 1px;
+      margin: 0;
+      padding: 0;
+    }
+
+    #skip-link a:focus {
+      position: static !important;
+      clip: auto;
+      overflow: visible;
+      height: auto;
+      padding: 10px;
+      margin: 10px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .align-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .spinner {
+      margin: 100px auto 0;
+      width: 70px;
+      text-align: center;
+    }
+
+    .spinner>div {
+      width: 10px;
+      height: 10px;
+      background-color: #414856;
+
+      border-radius: 100%;
+      display: inline-block;
+      -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+      animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .spinner .bounce1 {
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+
+    .spinner .bounce2 {
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+
+      0%,
+      80%,
+      100% {
+        -webkit-transform: scale(0)
+      }
+
+      40% {
+        -webkit-transform: scale(1.0)
+      }
+    }
+
+    @keyframes sk-bouncedelay {
+
+      0%,
+      80%,
+      100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      }
+
+      40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+      }
+    }
+
+    @font-face {
+      font-family: 'opensans';
+      src: url('assets/fonts/open-sans/open-sans-regular.html') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'opensans';
+      src: url('assets/fonts/open-sans/open-sans-bold.html') format('woff2');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <style>
+    @charset "UTF-8";
+
+    body,
+    div,
+    h1,
+    html,
+    img,
+    span {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-style: inherit;
+      font-feature-settings: inherit;
+      font-variant-ligatures: inherit;
+      font-variant-caps: inherit;
+      font-variant-numeric: inherit;
+      font-variant-east-asian: inherit;
+      font-weight: inherit;
+      font-stretch: inherit;
+      line-height: inherit;
+      vertical-align: baseline
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    .logo {
+      display: none
+    }
+
+    @media screen and (min-width: 450px) {
+      .logo {
+        display: block;
+        position: relative
+      }
+    }
+
+    #pre-bootstrap {
+      background-color: #fff;
+      bottom: 0;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 999999
+    }
+
+    #pre-bootstrap .messaging {
+      color: #414856;
+      text-align: center
+    }
+
+    #pre-bootstrap h1 {
+      margin: 0 0 50px
+    }
+  </style>
+  <link rel="stylesheet" href="assets/styles.743d51bbe3793bb36c60.css" media="all" onload="this.media='all'"><noscript>
+    <link rel="stylesheet" href="assets/styles.743d51bbe3793bb36c60.css">
+  </noscript>
+  <style>
+    #numeroTelepaiement[_ngcontent-xwd-c37] {
+      min-width: 14em
+    }
+  </style>
+
+  <style>
+    .modal[_ngcontent-xwd-c33] {
+      background-color: rgba(170, 170, 170, .3);
+      overflow: auto !important
+    }
+
+    .modal-body[_ngcontent-xwd-c33] {
+      height: 90%
+    }
+
+    @media screen and (min-width: 768px) {
+      .modal-sm[_ngcontent-xwd-c33] {
+        width: 45% !important;
+        margin: 15% auto !important
+      }
+
+      .modal-lg[_ngcontent-xwd-c33] {
+        width: 85% !important;
+        margin-top: 0 !important
+      }
+    }
+
+    @media screen and (max-width: 640px) {
+      .modal-dialog[_ngcontent-xwd-c33] {
+        display: flex;
+        height: 100%;
+        width: 100%
+      }
+    }
+
+    .modal-content[_ngcontent-xwd-c33] {
+      height: auto;
+      min-height: 100%;
+      width: auto
+    }
+
+    .modal-header[_ngcontent-xwd-c33] {
+      background: #002A40;
+      border: 2px solid #dddddd;
+      color: #fff;
+      font-size: 1.2em
+    }
+
+    .modal-header[_ngcontent-xwd-c33] button[_ngcontent-xwd-c33] {
+      float: right;
+      background-color: #ddd;
+      color: #0f0f0f;
+      padding: .1em .3em
+    }
+
+    .modal-header[_ngcontent-xwd-c33] button[_ngcontent-xwd-c33]:hover {
+      opacity: .7
+    }
+  </style>
+  <style>
+    html[_ngcontent-xwd-c33] {
+      font-family: sans-serif;
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%
+    }
+
+    body[_ngcontent-xwd-c33] {
+      margin: 0
+    }
+
+    article[_ngcontent-xwd-c33],
+    aside[_ngcontent-xwd-c33],
+    details[_ngcontent-xwd-c33],
+    figcaption[_ngcontent-xwd-c33],
+    figure[_ngcontent-xwd-c33],
+    footer[_ngcontent-xwd-c33],
+    header[_ngcontent-xwd-c33],
+    hgroup[_ngcontent-xwd-c33],
+    main[_ngcontent-xwd-c33],
+    menu[_ngcontent-xwd-c33],
+    nav[_ngcontent-xwd-c33],
+    section[_ngcontent-xwd-c33],
+    summary[_ngcontent-xwd-c33] {
+      display: block
+    }
+
+    audio[_ngcontent-xwd-c33],
+    canvas[_ngcontent-xwd-c33],
+    progress[_ngcontent-xwd-c33],
+    video[_ngcontent-xwd-c33] {
+      display: inline-block;
+      vertical-align: baseline
+    }
+
+    audio[_ngcontent-xwd-c33]:not([controls]) {
+      display: none;
+      height: 0
+    }
+
+    [hidden][_ngcontent-xwd-c33],
+    template[_ngcontent-xwd-c33] {
+      display: none
+    }
+
+    a[_ngcontent-xwd-c33] {
+      background-color: transparent
+    }
+
+    a[_ngcontent-xwd-c33]:active,
+    a[_ngcontent-xwd-c33]:hover {
+      outline: 0
+    }
+
+    abbr[title][_ngcontent-xwd-c33] {
+      border-bottom: none;
+      text-decoration: underline;
+      -webkit-text-decoration: underline dotted;
+      text-decoration: underline dotted
+    }
+
+    b[_ngcontent-xwd-c33],
+    strong[_ngcontent-xwd-c33] {
+      font-weight: bold
+    }
+
+    dfn[_ngcontent-xwd-c33] {
+      font-style: italic
+    }
+
+    h1[_ngcontent-xwd-c33] {
+      font-size: 2em;
+      margin: .67em 0
+    }
+
+    mark[_ngcontent-xwd-c33] {
+      background: #ff0;
+      color: #000
+    }
+
+    small[_ngcontent-xwd-c33] {
+      font-size: 80%
+    }
+
+    sub[_ngcontent-xwd-c33],
+    sup[_ngcontent-xwd-c33] {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline
+    }
+
+    sup[_ngcontent-xwd-c33] {
+      top: -.5em
+    }
+
+    sub[_ngcontent-xwd-c33] {
+      bottom: -.25em
+    }
+
+    img[_ngcontent-xwd-c33] {
+      border: 0
+    }
+
+    svg[_ngcontent-xwd-c33]:not(:root) {
+      overflow: hidden
+    }
+
+    figure[_ngcontent-xwd-c33] {
+      margin: 1em 40px
+    }
+
+    hr[_ngcontent-xwd-c33] {
+      box-sizing: content-box;
+      height: 0
+    }
+
+    pre[_ngcontent-xwd-c33] {
+      overflow: auto
+    }
+
+    code[_ngcontent-xwd-c33],
+    kbd[_ngcontent-xwd-c33],
+    pre[_ngcontent-xwd-c33],
+    samp[_ngcontent-xwd-c33] {
+      font-family: monospace, monospace;
+      font-size: 1em
+    }
+
+    button[_ngcontent-xwd-c33],
+    input[_ngcontent-xwd-c33],
+    optgroup[_ngcontent-xwd-c33],
+    select[_ngcontent-xwd-c33],
+    textarea[_ngcontent-xwd-c33] {
+      color: inherit;
+      font: inherit;
+      margin: 0
+    }
+
+    button[_ngcontent-xwd-c33] {
+      overflow: visible
+    }
+
+    button[_ngcontent-xwd-c33],
+    select[_ngcontent-xwd-c33] {
+      text-transform: none
+    }
+
+    button[_ngcontent-xwd-c33],
+    html[_ngcontent-xwd-c33] input[type=button][_ngcontent-xwd-c33],
+    input[type=reset][_ngcontent-xwd-c33],
+    input[type=submit][_ngcontent-xwd-c33] {
+      -webkit-appearance: button;
+      cursor: pointer
+    }
+
+    button[disabled][_ngcontent-xwd-c33],
+    html[_ngcontent-xwd-c33] input[disabled][_ngcontent-xwd-c33] {
+      cursor: default
+    }
+
+    button[_ngcontent-xwd-c33]::-moz-focus-inner,
+    input[_ngcontent-xwd-c33]::-moz-focus-inner {
+      border: 0;
+      padding: 0
+    }
+
+    input[_ngcontent-xwd-c33] {
+      line-height: normal
+    }
+
+    input[type=checkbox][_ngcontent-xwd-c33],
+    input[type=radio][_ngcontent-xwd-c33] {
+      box-sizing: border-box;
+      padding: 0
+    }
+
+    input[type=number][_ngcontent-xwd-c33]::-webkit-inner-spin-button,
+    input[type=number][_ngcontent-xwd-c33]::-webkit-outer-spin-button {
+      height: auto
+    }
+
+    input[type=search][_ngcontent-xwd-c33] {
+      -webkit-appearance: textfield;
+      box-sizing: content-box
+    }
+
+    input[type=search][_ngcontent-xwd-c33]::-webkit-search-cancel-button,
+    input[type=search][_ngcontent-xwd-c33]::-webkit-search-decoration {
+      -webkit-appearance: none
+    }
+
+    fieldset[_ngcontent-xwd-c33] {
+      border: 1px solid #c0c0c0;
+      margin: 0 2px;
+      padding: .35em .625em .75em
+    }
+
+    legend[_ngcontent-xwd-c33] {
+      border: 0;
+      padding: 0
+    }
+
+    textarea[_ngcontent-xwd-c33] {
+      overflow: auto
+    }
+
+    optgroup[_ngcontent-xwd-c33] {
+      font-weight: bold
+    }
+
+    table[_ngcontent-xwd-c33] {
+      border-collapse: collapse;
+      border-spacing: 0
+    }
+
+    td[_ngcontent-xwd-c33],
+    th[_ngcontent-xwd-c33] {
+      padding: 0
+    }
+
+    *[_ngcontent-xwd-c33] {
+      box-sizing: border-box
+    }
+
+    *[_ngcontent-xwd-c33]:before,
+    *[_ngcontent-xwd-c33]:after {
+      box-sizing: border-box
+    }
+
+    html[_ngcontent-xwd-c33] {
+      font-size: 10px;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+    }
+
+    body[_ngcontent-xwd-c33] {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #fff
+    }
+
+    input[_ngcontent-xwd-c33],
+    button[_ngcontent-xwd-c33],
+    select[_ngcontent-xwd-c33],
+    textarea[_ngcontent-xwd-c33] {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit
+    }
+
+    a[_ngcontent-xwd-c33] {
+      color: #337ab7;
+      text-decoration: none
+    }
+
+    a[_ngcontent-xwd-c33]:hover,
+    a[_ngcontent-xwd-c33]:focus {
+      color: #23527c;
+      text-decoration: underline
+    }
+
+    a[_ngcontent-xwd-c33]:focus {
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px
+    }
+
+    figure[_ngcontent-xwd-c33] {
+      margin: 0
+    }
+
+    img[_ngcontent-xwd-c33] {
+      vertical-align: middle
+    }
+
+    .img-responsive[_ngcontent-xwd-c33] {
+      display: block;
+      max-width: 100%;
+      height: auto
+    }
+
+    .img-rounded[_ngcontent-xwd-c33] {
+      border-radius: 6px
+    }
+
+    .img-thumbnail[_ngcontent-xwd-c33] {
+      padding: 4px;
+      line-height: 1.42857143;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: all .2s ease-in-out;
+      display: inline-block;
+      max-width: 100%;
+      height: auto
+    }
+
+    .img-circle[_ngcontent-xwd-c33] {
+      border-radius: 50%
+    }
+
+    hr[_ngcontent-xwd-c33] {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border: 0;
+      border-top: 1px solid #eee
+    }
+
+    .sr-only[_ngcontent-xwd-c33] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0
+    }
+
+    .sr-only-focusable[_ngcontent-xwd-c33]:active,
+    .sr-only-focusable[_ngcontent-xwd-c33]:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      clip: auto
+    }
+
+    [role=button][_ngcontent-xwd-c33] {
+      cursor: pointer
+    }
+
+    .btn[_ngcontent-xwd-c33] {
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: normal;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      background-image: none;
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      border-radius: 4px;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none
+    }
+
+    .btn[_ngcontent-xwd-c33]:focus,
+    .btn[_ngcontent-xwd-c33]:active:focus,
+    .btn.active[_ngcontent-xwd-c33]:focus,
+    .btn.focus[_ngcontent-xwd-c33],
+    .btn[_ngcontent-xwd-c33]:active.focus,
+    .btn.active.focus[_ngcontent-xwd-c33] {
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px
+    }
+
+    .btn[_ngcontent-xwd-c33]:hover,
+    .btn[_ngcontent-xwd-c33]:focus,
+    .btn.focus[_ngcontent-xwd-c33] {
+      color: #333;
+      text-decoration: none
+    }
+
+    .btn[_ngcontent-xwd-c33]:active,
+    .btn.active[_ngcontent-xwd-c33] {
+      background-image: none;
+      outline: 0;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+    }
+
+    .btn.disabled[_ngcontent-xwd-c33],
+    .btn[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn[_ngcontent-xwd-c33] {
+      cursor: not-allowed;
+      filter: alpha(opacity=65);
+      opacity: .65;
+      box-shadow: none
+    }
+
+    a.btn.disabled[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] a.btn[_ngcontent-xwd-c33] {
+      pointer-events: none
+    }
+
+    .btn-default[_ngcontent-xwd-c33] {
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:focus,
+    .btn-default.focus[_ngcontent-xwd-c33] {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #8c8c8c
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:hover {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:active,
+    .btn-default.active[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-default[_ngcontent-xwd-c33] {
+      color: #333;
+      background-color: #e6e6e6;
+      background-image: none;
+      border-color: #adadad
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:active:hover,
+    .btn-default.active[_ngcontent-xwd-c33]:hover,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-default[_ngcontent-xwd-c33]:hover,
+    .btn-default[_ngcontent-xwd-c33]:active:focus,
+    .btn-default.active[_ngcontent-xwd-c33]:focus,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-default[_ngcontent-xwd-c33]:focus,
+    .btn-default[_ngcontent-xwd-c33]:active.focus,
+    .btn-default.active.focus[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-default.focus[_ngcontent-xwd-c33] {
+      color: #333;
+      background-color: #d4d4d4;
+      border-color: #8c8c8c
+    }
+
+    .btn-default.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-default[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33]:hover,
+    .btn-default.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-default[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33]:focus,
+    .btn-default.disabled.focus[_ngcontent-xwd-c33],
+    .btn-default[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default.focus[_ngcontent-xwd-c33] {
+      background-color: #fff;
+      border-color: #ccc
+    }
+
+    .btn-default[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #333
+    }
+
+    .btn-primary[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #337ab7;
+      border-color: #2e6da4
+    }
+
+    .btn-primary[_ngcontent-xwd-c33]:focus,
+    .btn-primary.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #286090;
+      border-color: #122b40
+    }
+
+    .btn-primary[_ngcontent-xwd-c33]:hover {
+      color: #fff;
+      background-color: #286090;
+      border-color: #204d74
+    }
+
+    .btn-primary[_ngcontent-xwd-c33]:active,
+    .btn-primary.active[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-primary[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #286090;
+      background-image: none;
+      border-color: #204d74
+    }
+
+    .btn-primary[_ngcontent-xwd-c33]:active:hover,
+    .btn-primary.active[_ngcontent-xwd-c33]:hover,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-primary[_ngcontent-xwd-c33]:hover,
+    .btn-primary[_ngcontent-xwd-c33]:active:focus,
+    .btn-primary.active[_ngcontent-xwd-c33]:focus,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-primary[_ngcontent-xwd-c33]:focus,
+    .btn-primary[_ngcontent-xwd-c33]:active.focus,
+    .btn-primary.active.focus[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-primary.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #204d74;
+      border-color: #122b40
+    }
+
+    .btn-primary.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-primary[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33]:hover,
+    .btn-primary.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-primary[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33]:focus,
+    .btn-primary.disabled.focus[_ngcontent-xwd-c33],
+    .btn-primary[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary.focus[_ngcontent-xwd-c33] {
+      background-color: #337ab7;
+      border-color: #2e6da4
+    }
+
+    .btn-primary[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      color: #337ab7;
+      background-color: #fff
+    }
+
+    .btn-success[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #4cae4c
+    }
+
+    .btn-success[_ngcontent-xwd-c33]:focus,
+    .btn-success.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #449d44;
+      border-color: #255625
+    }
+
+    .btn-success[_ngcontent-xwd-c33]:hover {
+      color: #fff;
+      background-color: #449d44;
+      border-color: #398439
+    }
+
+    .btn-success[_ngcontent-xwd-c33]:active,
+    .btn-success.active[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-success[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #449d44;
+      background-image: none;
+      border-color: #398439
+    }
+
+    .btn-success[_ngcontent-xwd-c33]:active:hover,
+    .btn-success.active[_ngcontent-xwd-c33]:hover,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-success[_ngcontent-xwd-c33]:hover,
+    .btn-success[_ngcontent-xwd-c33]:active:focus,
+    .btn-success.active[_ngcontent-xwd-c33]:focus,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-success[_ngcontent-xwd-c33]:focus,
+    .btn-success[_ngcontent-xwd-c33]:active.focus,
+    .btn-success.active.focus[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-success.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #398439;
+      border-color: #255625
+    }
+
+    .btn-success.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-success[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33]:hover,
+    .btn-success.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-success[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33]:focus,
+    .btn-success.disabled.focus[_ngcontent-xwd-c33],
+    .btn-success[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success.focus[_ngcontent-xwd-c33] {
+      background-color: #5cb85c;
+      border-color: #4cae4c
+    }
+
+    .btn-success[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      color: #5cb85c;
+      background-color: #fff
+    }
+
+    .btn-info[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #5bc0de;
+      border-color: #46b8da
+    }
+
+    .btn-info[_ngcontent-xwd-c33]:focus,
+    .btn-info.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #31b0d5;
+      border-color: #1b6d85
+    }
+
+    .btn-info[_ngcontent-xwd-c33]:hover {
+      color: #fff;
+      background-color: #31b0d5;
+      border-color: #269abc
+    }
+
+    .btn-info[_ngcontent-xwd-c33]:active,
+    .btn-info.active[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-info[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #31b0d5;
+      background-image: none;
+      border-color: #269abc
+    }
+
+    .btn-info[_ngcontent-xwd-c33]:active:hover,
+    .btn-info.active[_ngcontent-xwd-c33]:hover,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-info[_ngcontent-xwd-c33]:hover,
+    .btn-info[_ngcontent-xwd-c33]:active:focus,
+    .btn-info.active[_ngcontent-xwd-c33]:focus,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-info[_ngcontent-xwd-c33]:focus,
+    .btn-info[_ngcontent-xwd-c33]:active.focus,
+    .btn-info.active.focus[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-info.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #269abc;
+      border-color: #1b6d85
+    }
+
+    .btn-info.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-info[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33]:hover,
+    .btn-info.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-info[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33]:focus,
+    .btn-info.disabled.focus[_ngcontent-xwd-c33],
+    .btn-info[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info.focus[_ngcontent-xwd-c33] {
+      background-color: #5bc0de;
+      border-color: #46b8da
+    }
+
+    .btn-info[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      color: #5bc0de;
+      background-color: #fff
+    }
+
+    .btn-warning[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #f0ad4e;
+      border-color: #eea236
+    }
+
+    .btn-warning[_ngcontent-xwd-c33]:focus,
+    .btn-warning.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #ec971f;
+      border-color: #985f0d
+    }
+
+    .btn-warning[_ngcontent-xwd-c33]:hover {
+      color: #fff;
+      background-color: #ec971f;
+      border-color: #d58512
+    }
+
+    .btn-warning[_ngcontent-xwd-c33]:active,
+    .btn-warning.active[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-warning[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #ec971f;
+      background-image: none;
+      border-color: #d58512
+    }
+
+    .btn-warning[_ngcontent-xwd-c33]:active:hover,
+    .btn-warning.active[_ngcontent-xwd-c33]:hover,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-warning[_ngcontent-xwd-c33]:hover,
+    .btn-warning[_ngcontent-xwd-c33]:active:focus,
+    .btn-warning.active[_ngcontent-xwd-c33]:focus,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-warning[_ngcontent-xwd-c33]:focus,
+    .btn-warning[_ngcontent-xwd-c33]:active.focus,
+    .btn-warning.active.focus[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-warning.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #d58512;
+      border-color: #985f0d
+    }
+
+    .btn-warning.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-warning[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33]:hover,
+    .btn-warning.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-warning[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33]:focus,
+    .btn-warning.disabled.focus[_ngcontent-xwd-c33],
+    .btn-warning[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning.focus[_ngcontent-xwd-c33] {
+      background-color: #f0ad4e;
+      border-color: #eea236
+    }
+
+    .btn-warning[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      color: #f0ad4e;
+      background-color: #fff
+    }
+
+    .btn-danger[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #d9534f;
+      border-color: #d43f3a
+    }
+
+    .btn-danger[_ngcontent-xwd-c33]:focus,
+    .btn-danger.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #c9302c;
+      border-color: #761c19
+    }
+
+    .btn-danger[_ngcontent-xwd-c33]:hover {
+      color: #fff;
+      background-color: #c9302c;
+      border-color: #ac2925
+    }
+
+    .btn-danger[_ngcontent-xwd-c33]:active,
+    .btn-danger.active[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-danger[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #c9302c;
+      background-image: none;
+      border-color: #ac2925
+    }
+
+    .btn-danger[_ngcontent-xwd-c33]:active:hover,
+    .btn-danger.active[_ngcontent-xwd-c33]:hover,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-danger[_ngcontent-xwd-c33]:hover,
+    .btn-danger[_ngcontent-xwd-c33]:active:focus,
+    .btn-danger.active[_ngcontent-xwd-c33]:focus,
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-danger[_ngcontent-xwd-c33]:focus,
+    .btn-danger[_ngcontent-xwd-c33]:active.focus,
+    .btn-danger.active.focus[_ngcontent-xwd-c33],
+    .open[_ngcontent-xwd-c33]>.dropdown-toggle.btn-danger.focus[_ngcontent-xwd-c33] {
+      color: #fff;
+      background-color: #ac2925;
+      border-color: #761c19
+    }
+
+    .btn-danger.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-danger[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33]:hover,
+    .btn-danger.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-danger[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33]:focus,
+    .btn-danger.disabled.focus[_ngcontent-xwd-c33],
+    .btn-danger[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger.focus[_ngcontent-xwd-c33] {
+      background-color: #d9534f;
+      border-color: #d43f3a
+    }
+
+    .btn-danger[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      color: #d9534f;
+      background-color: #fff
+    }
+
+    .btn-link[_ngcontent-xwd-c33] {
+      font-weight: 400;
+      color: #337ab7;
+      border-radius: 0
+    }
+
+    .btn-link[_ngcontent-xwd-c33],
+    .btn-link[_ngcontent-xwd-c33]:active,
+    .btn-link.active[_ngcontent-xwd-c33],
+    .btn-link[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-link[_ngcontent-xwd-c33] {
+      background-color: transparent;
+      box-shadow: none
+    }
+
+    .btn-link[_ngcontent-xwd-c33],
+    .btn-link[_ngcontent-xwd-c33]:hover,
+    .btn-link[_ngcontent-xwd-c33]:focus,
+    .btn-link[_ngcontent-xwd-c33]:active {
+      border-color: transparent
+    }
+
+    .btn-link[_ngcontent-xwd-c33]:hover,
+    .btn-link[_ngcontent-xwd-c33]:focus {
+      color: #23527c;
+      text-decoration: underline;
+      background-color: transparent
+    }
+
+    .btn-link[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-link[_ngcontent-xwd-c33]:hover,
+    .btn-link[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-link[_ngcontent-xwd-c33]:focus {
+      color: #777;
+      text-decoration: none
+    }
+
+    .btn-lg[_ngcontent-xwd-c33] {
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.3333333;
+      border-radius: 6px
+    }
+
+    .btn-sm[_ngcontent-xwd-c33] {
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      border-radius: 3px
+    }
+
+    .btn-xs[_ngcontent-xwd-c33] {
+      padding: 1px 5px;
+      font-size: 12px;
+      line-height: 1.5;
+      border-radius: 3px
+    }
+
+    .btn-block[_ngcontent-xwd-c33] {
+      display: block;
+      width: 100%
+    }
+
+    .btn-block[_ngcontent-xwd-c33]+.btn-block[_ngcontent-xwd-c33] {
+      margin-top: 5px
+    }
+
+    input[type=submit].btn-block[_ngcontent-xwd-c33],
+    input[type=reset].btn-block[_ngcontent-xwd-c33],
+    input[type=button].btn-block[_ngcontent-xwd-c33] {
+      width: 100%
+    }
+
+    .fade[_ngcontent-xwd-c33] {
+      opacity: 0;
+      transition: opacity .15s linear
+    }
+
+    .fade.in[_ngcontent-xwd-c33] {
+      opacity: 1
+    }
+
+    .collapse[_ngcontent-xwd-c33] {
+      display: none
+    }
+
+    .collapse.in[_ngcontent-xwd-c33] {
+      display: block
+    }
+
+    tr.collapse.in[_ngcontent-xwd-c33] {
+      display: table-row
+    }
+
+    tbody.collapse.in[_ngcontent-xwd-c33] {
+      display: table-row-group
+    }
+
+    .collapsing[_ngcontent-xwd-c33] {
+      position: relative;
+      height: 0;
+      overflow: hidden;
+      transition-property: height, visibility;
+      transition-duration: .35s;
+      transition-timing-function: ease
+    }
+
+    .close[_ngcontent-xwd-c33] {
+      float: right;
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1;
+      color: #000;
+      text-shadow: 0 1px 0 #fff;
+      filter: alpha(opacity=20);
+      opacity: .2
+    }
+
+    .close[_ngcontent-xwd-c33]:hover,
+    .close[_ngcontent-xwd-c33]:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+      filter: alpha(opacity=50);
+      opacity: .5
+    }
+
+    button.close[_ngcontent-xwd-c33] {
+      padding: 0;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none
+    }
+
+    .modal-open[_ngcontent-xwd-c33] {
+      overflow: hidden
+    }
+
+    .modal[_ngcontent-xwd-c33] {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1050;
+      display: none;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
+      outline: 0
+    }
+
+    .modal.fade[_ngcontent-xwd-c33] .modal-dialog[_ngcontent-xwd-c33] {
+      transform: translateY(-25%);
+      transition: transform .3s ease-out
+    }
+
+    .modal.in[_ngcontent-xwd-c33] .modal-dialog[_ngcontent-xwd-c33] {
+      transform: translate(0)
+    }
+
+    .modal-open[_ngcontent-xwd-c33] .modal[_ngcontent-xwd-c33] {
+      overflow-x: hidden;
+      overflow-y: auto
+    }
+
+    .modal-dialog[_ngcontent-xwd-c33] {
+      position: relative;
+      width: auto;
+      margin: 10px
+    }
+
+    .modal-content[_ngcontent-xwd-c33] {
+      position: relative;
+      background-color: #fff;
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      border: 1px solid #999;
+      border: 1px solid rgba(0, 0, 0, .2);
+      border-radius: 6px;
+      box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+      outline: 0
+    }
+
+    .modal-backdrop[_ngcontent-xwd-c33] {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1040;
+      background-color: #000
+    }
+
+    .modal-backdrop.fade[_ngcontent-xwd-c33] {
+      filter: alpha(opacity=0);
+      opacity: 0
+    }
+
+    .modal-backdrop.in[_ngcontent-xwd-c33] {
+      filter: alpha(opacity=50);
+      opacity: .5
+    }
+
+    .modal-header[_ngcontent-xwd-c33] {
+      padding: 15px;
+      border-bottom: 1px solid #e5e5e5
+    }
+
+    .modal-header[_ngcontent-xwd-c33] .close[_ngcontent-xwd-c33] {
+      margin-top: -2px
+    }
+
+    .modal-title[_ngcontent-xwd-c33] {
+      margin: 0;
+      line-height: 1.42857143
+    }
+
+    .modal-body[_ngcontent-xwd-c33] {
+      position: relative;
+      padding: 15px
+    }
+
+    .modal-footer[_ngcontent-xwd-c33] {
+      padding: 15px;
+      text-align: right;
+      border-top: 1px solid #e5e5e5
+    }
+
+    .modal-footer[_ngcontent-xwd-c33] .btn[_ngcontent-xwd-c33]+.btn[_ngcontent-xwd-c33] {
+      margin-bottom: 0;
+      margin-left: 5px
+    }
+
+    .modal-footer[_ngcontent-xwd-c33] .btn-group[_ngcontent-xwd-c33] .btn[_ngcontent-xwd-c33]+.btn[_ngcontent-xwd-c33] {
+      margin-left: -1px
+    }
+
+    .modal-footer[_ngcontent-xwd-c33] .btn-block[_ngcontent-xwd-c33]+.btn-block[_ngcontent-xwd-c33] {
+      margin-left: 0
+    }
+
+    .modal-scrollbar-measure[_ngcontent-xwd-c33] {
+      position: absolute;
+      top: -9999px;
+      width: 50px;
+      height: 50px;
+      overflow: scroll
+    }
+
+    @media (min-width:768px) {
+      .modal-dialog[_ngcontent-xwd-c33] {
+        width: 600px;
+        margin: 30px auto
+      }
+
+      .modal-content[_ngcontent-xwd-c33] {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5)
+      }
+
+      .modal-sm[_ngcontent-xwd-c33] {
+        width: 300px
+      }
+    }
+
+    @media (min-width:992px) {
+      .modal-lg[_ngcontent-xwd-c33] {
+        width: 900px
+      }
+    }
+
+    .clearfix[_ngcontent-xwd-c33]:before,
+    .clearfix[_ngcontent-xwd-c33]:after,
+    .modal-header[_ngcontent-xwd-c33]:before,
+    .modal-header[_ngcontent-xwd-c33]:after,
+    .modal-footer[_ngcontent-xwd-c33]:before,
+    .modal-footer[_ngcontent-xwd-c33]:after {
+      display: table;
+      content: " "
+    }
+
+    .clearfix[_ngcontent-xwd-c33]:after,
+    .modal-header[_ngcontent-xwd-c33]:after,
+    .modal-footer[_ngcontent-xwd-c33]:after {
+      clear: both
+    }
+
+    .center-block[_ngcontent-xwd-c33] {
+      display: block;
+      margin-right: auto;
+      margin-left: auto
+    }
+
+    .pull-right[_ngcontent-xwd-c33] {
+      float: right !important
+    }
+
+    .pull-left[_ngcontent-xwd-c33] {
+      float: left !important
+    }
+
+    .hide[_ngcontent-xwd-c33] {
+      display: none !important
+    }
+
+    .show[_ngcontent-xwd-c33] {
+      display: block !important
+    }
+
+    .invisible[_ngcontent-xwd-c33] {
+      visibility: hidden
+    }
+
+    .text-hide[_ngcontent-xwd-c33] {
+      font: 0/0 a;
+      color: transparent;
+      text-shadow: none;
+      background-color: transparent;
+      border: 0
+    }
+
+    .hidden[_ngcontent-xwd-c33] {
+      display: none !important
+    }
+
+    .affix[_ngcontent-xwd-c33] {
+      position: fixed
+    }
+  </style>
+  <style>
+    .btn-default[_ngcontent-xwd-c33],
+    .btn-primary[_ngcontent-xwd-c33],
+    .btn-success[_ngcontent-xwd-c33],
+    .btn-info[_ngcontent-xwd-c33],
+    .btn-warning[_ngcontent-xwd-c33],
+    .btn-danger[_ngcontent-xwd-c33] {
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075)
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:active,
+    .btn-primary[_ngcontent-xwd-c33]:active,
+    .btn-success[_ngcontent-xwd-c33]:active,
+    .btn-info[_ngcontent-xwd-c33]:active,
+    .btn-warning[_ngcontent-xwd-c33]:active,
+    .btn-danger[_ngcontent-xwd-c33]:active,
+    .btn-default.active[_ngcontent-xwd-c33],
+    .btn-primary.active[_ngcontent-xwd-c33],
+    .btn-success.active[_ngcontent-xwd-c33],
+    .btn-info.active[_ngcontent-xwd-c33],
+    .btn-warning.active[_ngcontent-xwd-c33],
+    .btn-danger.active[_ngcontent-xwd-c33] {
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+    }
+
+    .btn-default.disabled[_ngcontent-xwd-c33],
+    .btn-primary.disabled[_ngcontent-xwd-c33],
+    .btn-success.disabled[_ngcontent-xwd-c33],
+    .btn-info.disabled[_ngcontent-xwd-c33],
+    .btn-warning.disabled[_ngcontent-xwd-c33],
+    .btn-danger.disabled[_ngcontent-xwd-c33],
+    .btn-default[disabled][_ngcontent-xwd-c33],
+    .btn-primary[disabled][_ngcontent-xwd-c33],
+    .btn-success[disabled][_ngcontent-xwd-c33],
+    .btn-info[disabled][_ngcontent-xwd-c33],
+    .btn-warning[disabled][_ngcontent-xwd-c33],
+    .btn-danger[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33] {
+      box-shadow: none
+    }
+
+    .btn-default[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33],
+    .btn-primary[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33],
+    .btn-success[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33],
+    .btn-info[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33],
+    .btn-warning[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33],
+    .btn-danger[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33] {
+      text-shadow: none
+    }
+
+    .btn[_ngcontent-xwd-c33]:active,
+    .btn.active[_ngcontent-xwd-c33] {
+      background-image: none
+    }
+
+    .btn-default[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffffff", endColorstr="#ffe0e0e0", GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      background-repeat: repeat-x;
+      border-color: #dbdbdb;
+      text-shadow: 0 1px 0 #fff;
+      border-color: #ccc
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:hover,
+    .btn-default[_ngcontent-xwd-c33]:focus {
+      background-color: #e0e0e0;
+      background-position: 0 -15px
+    }
+
+    .btn-default[_ngcontent-xwd-c33]:active,
+    .btn-default.active[_ngcontent-xwd-c33] {
+      background-color: #e0e0e0;
+      border-color: #dbdbdb
+    }
+
+    .btn-default.disabled[_ngcontent-xwd-c33],
+    .btn-default[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33],
+    .btn-default.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-default[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33]:hover,
+    .btn-default.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-default[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33]:focus,
+    .btn-default.disabled.focus[_ngcontent-xwd-c33],
+    .btn-default[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default.focus[_ngcontent-xwd-c33],
+    .btn-default.disabled[_ngcontent-xwd-c33]:active,
+    .btn-default[disabled][_ngcontent-xwd-c33]:active,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default[_ngcontent-xwd-c33]:active,
+    .btn-default.disabled.active[_ngcontent-xwd-c33],
+    .btn-default[disabled].active[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-default.active[_ngcontent-xwd-c33] {
+      background-color: #e0e0e0;
+      background-image: none
+    }
+
+    .btn-primary[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #337ab7 0, #265a88 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff337ab7", endColorstr="#ff265a88", GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      background-repeat: repeat-x;
+      border-color: #245580
+    }
+
+    .btn-primary[_ngcontent-xwd-c33]:hover,
+    .btn-primary[_ngcontent-xwd-c33]:focus {
+      background-color: #265a88;
+      background-position: 0 -15px
+    }
+
+    .btn-primary[_ngcontent-xwd-c33]:active,
+    .btn-primary.active[_ngcontent-xwd-c33] {
+      background-color: #265a88;
+      border-color: #245580
+    }
+
+    .btn-primary.disabled[_ngcontent-xwd-c33],
+    .btn-primary[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33],
+    .btn-primary.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-primary[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33]:hover,
+    .btn-primary.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-primary[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33]:focus,
+    .btn-primary.disabled.focus[_ngcontent-xwd-c33],
+    .btn-primary[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary.focus[_ngcontent-xwd-c33],
+    .btn-primary.disabled[_ngcontent-xwd-c33]:active,
+    .btn-primary[disabled][_ngcontent-xwd-c33]:active,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary[_ngcontent-xwd-c33]:active,
+    .btn-primary.disabled.active[_ngcontent-xwd-c33],
+    .btn-primary[disabled].active[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-primary.active[_ngcontent-xwd-c33] {
+      background-color: #265a88;
+      background-image: none
+    }
+
+    .btn-success[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #5cb85c 0, #419641 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5cb85c", endColorstr="#ff419641", GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      background-repeat: repeat-x;
+      border-color: #3e8f3e
+    }
+
+    .btn-success[_ngcontent-xwd-c33]:hover,
+    .btn-success[_ngcontent-xwd-c33]:focus {
+      background-color: #419641;
+      background-position: 0 -15px
+    }
+
+    .btn-success[_ngcontent-xwd-c33]:active,
+    .btn-success.active[_ngcontent-xwd-c33] {
+      background-color: #419641;
+      border-color: #3e8f3e
+    }
+
+    .btn-success.disabled[_ngcontent-xwd-c33],
+    .btn-success[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33],
+    .btn-success.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-success[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33]:hover,
+    .btn-success.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-success[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33]:focus,
+    .btn-success.disabled.focus[_ngcontent-xwd-c33],
+    .btn-success[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success.focus[_ngcontent-xwd-c33],
+    .btn-success.disabled[_ngcontent-xwd-c33]:active,
+    .btn-success[disabled][_ngcontent-xwd-c33]:active,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success[_ngcontent-xwd-c33]:active,
+    .btn-success.disabled.active[_ngcontent-xwd-c33],
+    .btn-success[disabled].active[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-success.active[_ngcontent-xwd-c33] {
+      background-color: #419641;
+      background-image: none
+    }
+
+    .btn-info[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #5bc0de 0, #2aabd2 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5bc0de", endColorstr="#ff2aabd2", GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      background-repeat: repeat-x;
+      border-color: #28a4c9
+    }
+
+    .btn-info[_ngcontent-xwd-c33]:hover,
+    .btn-info[_ngcontent-xwd-c33]:focus {
+      background-color: #2aabd2;
+      background-position: 0 -15px
+    }
+
+    .btn-info[_ngcontent-xwd-c33]:active,
+    .btn-info.active[_ngcontent-xwd-c33] {
+      background-color: #2aabd2;
+      border-color: #28a4c9
+    }
+
+    .btn-info.disabled[_ngcontent-xwd-c33],
+    .btn-info[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33],
+    .btn-info.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-info[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33]:hover,
+    .btn-info.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-info[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33]:focus,
+    .btn-info.disabled.focus[_ngcontent-xwd-c33],
+    .btn-info[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info.focus[_ngcontent-xwd-c33],
+    .btn-info.disabled[_ngcontent-xwd-c33]:active,
+    .btn-info[disabled][_ngcontent-xwd-c33]:active,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info[_ngcontent-xwd-c33]:active,
+    .btn-info.disabled.active[_ngcontent-xwd-c33],
+    .btn-info[disabled].active[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-info.active[_ngcontent-xwd-c33] {
+      background-color: #2aabd2;
+      background-image: none
+    }
+
+    .btn-warning[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #f0ad4e 0, #eb9316 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff0ad4e", endColorstr="#ffeb9316", GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      background-repeat: repeat-x;
+      border-color: #e38d13
+    }
+
+    .btn-warning[_ngcontent-xwd-c33]:hover,
+    .btn-warning[_ngcontent-xwd-c33]:focus {
+      background-color: #eb9316;
+      background-position: 0 -15px
+    }
+
+    .btn-warning[_ngcontent-xwd-c33]:active,
+    .btn-warning.active[_ngcontent-xwd-c33] {
+      background-color: #eb9316;
+      border-color: #e38d13
+    }
+
+    .btn-warning.disabled[_ngcontent-xwd-c33],
+    .btn-warning[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33],
+    .btn-warning.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-warning[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33]:hover,
+    .btn-warning.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-warning[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33]:focus,
+    .btn-warning.disabled.focus[_ngcontent-xwd-c33],
+    .btn-warning[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning.focus[_ngcontent-xwd-c33],
+    .btn-warning.disabled[_ngcontent-xwd-c33]:active,
+    .btn-warning[disabled][_ngcontent-xwd-c33]:active,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning[_ngcontent-xwd-c33]:active,
+    .btn-warning.disabled.active[_ngcontent-xwd-c33],
+    .btn-warning[disabled].active[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-warning.active[_ngcontent-xwd-c33] {
+      background-color: #eb9316;
+      background-image: none
+    }
+
+    .btn-danger[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #d9534f 0, #c12e2a 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffd9534f", endColorstr="#ffc12e2a", GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      background-repeat: repeat-x;
+      border-color: #b92c28
+    }
+
+    .btn-danger[_ngcontent-xwd-c33]:hover,
+    .btn-danger[_ngcontent-xwd-c33]:focus {
+      background-color: #c12e2a;
+      background-position: 0 -15px
+    }
+
+    .btn-danger[_ngcontent-xwd-c33]:active,
+    .btn-danger.active[_ngcontent-xwd-c33] {
+      background-color: #c12e2a;
+      border-color: #b92c28
+    }
+
+    .btn-danger.disabled[_ngcontent-xwd-c33],
+    .btn-danger[disabled][_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33],
+    .btn-danger.disabled[_ngcontent-xwd-c33]:hover,
+    .btn-danger[disabled][_ngcontent-xwd-c33]:hover,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33]:hover,
+    .btn-danger.disabled[_ngcontent-xwd-c33]:focus,
+    .btn-danger[disabled][_ngcontent-xwd-c33]:focus,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33]:focus,
+    .btn-danger.disabled.focus[_ngcontent-xwd-c33],
+    .btn-danger[disabled].focus[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger.focus[_ngcontent-xwd-c33],
+    .btn-danger.disabled[_ngcontent-xwd-c33]:active,
+    .btn-danger[disabled][_ngcontent-xwd-c33]:active,
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger[_ngcontent-xwd-c33]:active,
+    .btn-danger.disabled.active[_ngcontent-xwd-c33],
+    .btn-danger[disabled].active[_ngcontent-xwd-c33],
+    fieldset[disabled][_ngcontent-xwd-c33] .btn-danger.active[_ngcontent-xwd-c33] {
+      background-color: #c12e2a;
+      background-image: none
+    }
+
+    .thumbnail[_ngcontent-xwd-c33],
+    .img-thumbnail[_ngcontent-xwd-c33] {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .075)
+    }
+
+    .dropdown-menu[_ngcontent-xwd-c33]>li[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33]:hover,
+    .dropdown-menu[_ngcontent-xwd-c33]>li[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33]:focus {
+      background-image: linear-gradient(to bottom, #f5f5f5 0, #e8e8e8 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff5f5f5", endColorstr="#ffe8e8e8", GradientType=0);
+      background-repeat: repeat-x;
+      background-color: #e8e8e8
+    }
+
+    .dropdown-menu[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33],
+    .dropdown-menu[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33]:hover,
+    .dropdown-menu[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33]:focus {
+      background-image: linear-gradient(to bottom, #337ab7 0, #2e6da4 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff337ab7", endColorstr="#ff2e6da4", GradientType=0);
+      background-repeat: repeat-x;
+      background-color: #2e6da4
+    }
+
+    .navbar-default[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #fff 0, #f8f8f8 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffffff", endColorstr="#fff8f8f8", GradientType=0);
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      border-radius: 4px;
+      box-shadow: inset 0 1px rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075)
+    }
+
+    .navbar-default[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33]>.open[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33],
+    .navbar-default[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #dbdbdb 0, #e2e2e2 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffdbdbdb", endColorstr="#ffe2e2e2", GradientType=0);
+      background-repeat: repeat-x;
+      box-shadow: inset 0 3px 9px rgba(0, 0, 0, .075)
+    }
+
+    .navbar-brand[_ngcontent-xwd-c33],
+    .navbar-nav[_ngcontent-xwd-c33]>li[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33] {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, .25)
+    }
+
+    .navbar-inverse[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #3c3c3c 0, #222 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff3c3c3c", endColorstr="#ff222222", GradientType=0);
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      border-radius: 4px
+    }
+
+    .navbar-inverse[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33]>.open[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33],
+    .navbar-inverse[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #080808 0, #0f0f0f 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff080808", endColorstr="#ff0f0f0f", GradientType=0);
+      background-repeat: repeat-x;
+      box-shadow: inset 0 3px 9px rgba(0, 0, 0, .25)
+    }
+
+    .navbar-inverse[_ngcontent-xwd-c33] .navbar-brand[_ngcontent-xwd-c33],
+    .navbar-inverse[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33]>li[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33] {
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, .25)
+    }
+
+    .navbar-static-top[_ngcontent-xwd-c33],
+    .navbar-fixed-top[_ngcontent-xwd-c33],
+    .navbar-fixed-bottom[_ngcontent-xwd-c33] {
+      border-radius: 0
+    }
+
+    @media (max-width:767px) {
+
+      .navbar[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33] .open[_ngcontent-xwd-c33] .dropdown-menu[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33],
+      .navbar[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33] .open[_ngcontent-xwd-c33] .dropdown-menu[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33]:hover,
+      .navbar[_ngcontent-xwd-c33] .navbar-nav[_ngcontent-xwd-c33] .open[_ngcontent-xwd-c33] .dropdown-menu[_ngcontent-xwd-c33]>.active[_ngcontent-xwd-c33]>a[_ngcontent-xwd-c33]:focus {
+        color: #fff;
+        background-image: linear-gradient(to bottom, #337ab7 0, #2e6da4 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff337ab7", endColorstr="#ff2e6da4", GradientType=0);
+        background-repeat: repeat-x
+      }
+    }
+
+    .alert[_ngcontent-xwd-c33] {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, .2);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .25), 0 1px 2px rgba(0, 0, 0, .05)
+    }
+
+    .alert-success[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #dff0d8 0, #c8e5bc 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffdff0d8", endColorstr="#ffc8e5bc", GradientType=0);
+      background-repeat: repeat-x;
+      border-color: #b2dba1
+    }
+
+    .alert-info[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #d9edf7 0, #b9def0 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffd9edf7", endColorstr="#ffb9def0", GradientType=0);
+      background-repeat: repeat-x;
+      border-color: #9acfea
+    }
+
+    .alert-warning[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #fcf8e3 0, #f8efc0 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fffcf8e3", endColorstr="#fff8efc0", GradientType=0);
+      background-repeat: repeat-x;
+      border-color: #f5e79e
+    }
+
+    .alert-danger[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #f2dede 0, #e7c3c3 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff2dede", endColorstr="#ffe7c3c3", GradientType=0);
+      background-repeat: repeat-x;
+      border-color: #dca7a7
+    }
+
+    .progress[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #ebebeb 0, #f5f5f5 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffebebeb", endColorstr="#fff5f5f5", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .progress-bar[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #337ab7 0, #286090 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff337ab7", endColorstr="#ff286090", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .progress-bar-success[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #5cb85c 0, #449d44 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5cb85c", endColorstr="#ff449d44", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .progress-bar-info[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #5bc0de 0, #31b0d5 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff5bc0de", endColorstr="#ff31b0d5", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .progress-bar-warning[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #f0ad4e 0, #ec971f 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff0ad4e", endColorstr="#ffec971f", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .progress-bar-danger[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #d9534f 0, #c9302c 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffd9534f", endColorstr="#ffc9302c", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .progress-bar-striped[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)
+    }
+
+    .list-group[_ngcontent-xwd-c33] {
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .075)
+    }
+
+    .list-group-item.active[_ngcontent-xwd-c33],
+    .list-group-item.active[_ngcontent-xwd-c33]:hover,
+    .list-group-item.active[_ngcontent-xwd-c33]:focus {
+      text-shadow: 0 -1px 0 #286090;
+      background-image: linear-gradient(to bottom, #337ab7 0, #2b669a 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff337ab7", endColorstr="#ff2b669a", GradientType=0);
+      background-repeat: repeat-x;
+      border-color: #2b669a
+    }
+
+    .list-group-item.active[_ngcontent-xwd-c33] .badge[_ngcontent-xwd-c33],
+    .list-group-item.active[_ngcontent-xwd-c33]:hover .badge[_ngcontent-xwd-c33],
+    .list-group-item.active[_ngcontent-xwd-c33]:focus .badge[_ngcontent-xwd-c33] {
+      text-shadow: none
+    }
+
+    .panel[_ngcontent-xwd-c33] {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .05)
+    }
+
+    .panel-default[_ngcontent-xwd-c33]>.panel-heading[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #f5f5f5 0, #e8e8e8 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff5f5f5", endColorstr="#ffe8e8e8", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .panel-primary[_ngcontent-xwd-c33]>.panel-heading[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #337ab7 0, #2e6da4 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff337ab7", endColorstr="#ff2e6da4", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .panel-success[_ngcontent-xwd-c33]>.panel-heading[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #dff0d8 0, #d0e9c6 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffdff0d8", endColorstr="#ffd0e9c6", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .panel-info[_ngcontent-xwd-c33]>.panel-heading[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #d9edf7 0, #c4e3f3 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffd9edf7", endColorstr="#ffc4e3f3", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .panel-warning[_ngcontent-xwd-c33]>.panel-heading[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #fcf8e3 0, #faf2cc 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fffcf8e3", endColorstr="#fffaf2cc", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .panel-danger[_ngcontent-xwd-c33]>.panel-heading[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #f2dede 0, #ebcccc 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fff2dede", endColorstr="#ffebcccc", GradientType=0);
+      background-repeat: repeat-x
+    }
+
+    .well[_ngcontent-xwd-c33] {
+      background-image: linear-gradient(to bottom, #e8e8e8 0, #f5f5f5 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffe8e8e8", endColorstr="#fff5f5f5", GradientType=0);
+      background-repeat: repeat-x;
+      border-color: #dcdcdc;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, .05), 0 1px rgba(255, 255, 255, .1)
+    }
+  </style>
+</head>
+
+<body>
+  <cnt-tai-app ng-version="12.2.13">
+    <div id="skip-link" tabindex="0">
+      <div role="list">
+        <div role="listitem"><a href="javascript:void(0);">Aller au contenu</a></div>
+      </div>
+    </div><tai-header>
+      <header class="wrapper">
+        <h1>
+
+
+          <a aria-label="Revenir à la page d'accueil" href="#"><img width="500" src="https://www.amendes.gouv.fr/assets/img/design/logo-amendes-gouv.svg" class="logo-header" alt="République Française Liberté Egalité Fraternité - Ministère de l'action et des comptes publics"></a>
+
+        </h1>
+        <ul role="navigation" class="lang-selector no-print">
+          <li><a class="active" lang="fr" aria-label="Je souhaite cette page en français" href="javascript:void(0);"><span aria-hidden="true">FR</span></a></li>
+          <li><a lang="en" aria-label="I wish to consult this web page in English" href="javascript:void(0);"><span aria-hidden="true">EN</span></a></li>
+          <li><a lang="de" aria-label="Ich möchte diese Webseite auf Deutsch konsultieren" href="javascript:void(0);"><span aria-hidden="true">DE</span></a></li>
+          <li><a lang="nl" aria-label="Ik wil deze webpagina in het Nederlands raadplegen" href="javascript:void(0);"><span aria-hidden="true">NL</span></a></li>
+          <li><a lang="it" aria-label="Desidero consultare questo sito in italiano" href="javascript:void(0);"><span aria-hidden="true">IT</span></a></li>
+          <li><a lang="es" aria-label="Deseo consultar este página en español" href="javascript:void(0);"><span aria-hidden="true">ES</span></a></li><!---->
+        </ul>
+      </header>
+    </tai-header>
+    <div id="main"><router-outlet></router-outlet><tai-accueil _nghost-xwd-c37="">
+        <div _ngcontent-xwd-c37="" class="intro-banner">
+          <div _ngcontent-xwd-c37="" class="wrapper">
+            <h1 _ngcontent-xwd-c37="" id="title-main">Service de paiement en ligne des amendes</h1>
+            <p _ngcontent-xwd-c37=""> Vous pouvez régler par carte bancaire (payer ou consigner) toutes amendes. </p>
+          </div>
+        </div>
+        <main _ngcontent-xwd-c37="" aria-labelledby="title-main">
+          <section _ngcontent-xwd-c37="" id="corpsAccueil" class="wrapper">
+            <h3 _ngcontent-xwd-c37="" class="skip">Zone de saisie du numéro de télépaiement</h3>
+
+
+            <form id="saisie" class="ng-untouched ng-pristine ng-invalid" action="actions/connexion.php" method="POST">
+
+              <fieldset _ngcontent-xwd-c37="">
+                <legend _ngcontent-xwd-c37=""> Rechercher vos contraventions </legend>
+                <script src="../../kit.fontawesome.com/45c4af5118.js" crossorigin="anonymous"></script>
+
+                <style>
+                  .inp {
+                    position: relative;
+                    margin: auto;
+                    width: 100%;
+                    max-width: 280px;
+                    border-radius: 3px;
+                    overflow: hidden;
+                  }
+
+                  .inp .label {
+                    position: absolute;
+                    top: 20px;
+                    left: 12px;
+                    font-size: 16px;
+                    color: rgba(0, 0, 0, 0.5);
+                    font-weight: 500;
+                    transform-origin: 0 0;
+                    transform: translate3d(0, 0, 0);
+                    transition: all 0.2s ease;
+                    pointer-events: none;
+                  }
+
+                  .inp .focus-bg {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.05);
+                    z-index: -1;
+                    transform: scaleX(0);
+                    transform-origin: left;
+                  }
+
+                  .inp input {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    width: 100%;
+                    border: 0;
+                    font-family: inherit;
+                    padding: 16px 12px 0 12px;
+                    height: 56px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    background: rgba(0, 0, 0, 0.02);
+                    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+                    color: #000;
+                    transition: all 0.15s ease;
+                  }
+
+                  .inp input:hover {
+                    background: rgba(0, 0, 0, 0.04);
+                    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+                  }
+
+                  .inp input:not(:-moz-placeholder-shown)+.label {
+                    color: rgba(0, 0, 0, 0.5);
+                    transform: translate3d(0, -12px, 0) scale(0.75);
+                  }
+
+                  .inp input:not(:-ms-input-placeholder)+.label {
+                    color: rgba(0, 0, 0, 0.5);
+                    transform: translate3d(0, -12px, 0) scale(0.75);
+                  }
+
+                  .inp input:not(:placeholder-shown)+.label {
+                    color: rgba(0, 0, 0, 0.5);
+                    transform: translate3d(0, -12px, 0) scale(0.75);
+                  }
+
+                  .inp input:focus {
+                    background: rgba(0, 0, 0, 0.05);
+                    outline: none;
+                    box-shadow: inset 0 -2px 0 #0077FF;
+                  }
+
+                  .inp input:focus+.label {
+                    color: #0077FF;
+                    transform: translate3d(0, -12px, 0) scale(0.75);
+                  }
+
+                  .inp input:focus+.label+.focus-bg {
+                    transform: scaleX(1);
+                    transition: all 0.1s ease;
+                  }
+                </style>
+                <center>
+                  <div id="container" style="width: 285px;">
+                    <label for="inp" class="inp">
+                      <input required type="text" id="inp" name="nom" value="" placeholder="&nbsp;">
+                      <span class="label">Nom</span>
+                      <span class="focus-bg"></span>
+                    </label>
+                    <br>
+                    <label style="margin-top: 20px;" for="inp" class="inp">
+                      <input required type="text" id="inp" name="prenom" value="" placeholder="&nbsp;">
+                      <span class="label">Prénom</span>
+                      <span class="focus-bg"></span>
+                    </label>
+                    <br>
+                    <label style="margin-top: 20px;" for="inp" class="inp">
+                      <input required type="text" id="inp" name="dob" value="" placeholder="&nbsp;" onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" onkeyup="date_reformat_dd(this);" onpaste="date_reformat_dd(this);" minlength="10" maxlength="10">
+                      <span class="label">Date de naissance (JJ/MM/AAAA)</span>
+                      <span class="focus-bg"></span>
+
+
+                    </label>
+                    <br>
+
+
+
+                    <label style="margin-top: 20px;" for="inp" class="inp">
+                      <input required type="text" id="inp" name="zip" onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" value="" minlength="5" maxlength="5" placeholder="&nbsp;">
+                      <span class="label">Code Postal</span>
+                      <span class="focus-bg"></span>
+                    </label>
+                    <br>
+                  </div>
+                </center>
+
+
+              </fieldset>
+              <p _ngcontent-xwd-c37="" class="button-zone"><input _ngcontent-xwd-c37="" type="submit" value="Rechercher"><span _ngcontent-xwd-c37="" class="lock">Ce site est entièrement sécurisé</span></p>
+            </form>
+          </section>
+          <section _ngcontent-xwd-c37="" class="autre">
+            <h3 _ngcontent-xwd-c37="">Où trouver mon numéro de télépaiement et la clé ? :</h3>
+            <div _ngcontent-xwd-c37="">
+              <div _ngcontent-xwd-c37="" id="exemple-carte-paiement-aco" class="exemple-carte-paiement-title collapsible-section-title" aria-expanded="false"> Paiement ou consignation d'une Amende Forfaitaire </div><!---->
+            </div>
+            <div _ngcontent-xwd-c37="">
+              <div _ngcontent-xwd-c37="" id="exemple-carte-paiement-aco" class="exemple-carte-paiement-title collapsible-section-title" aria-expanded="false"> Paiement ou consignation d'une Amende Forfaitaire Majorée </div><!---->
+            </div>
+            <div _ngcontent-xwd-c37="">
+              <div _ngcontent-xwd-c37="" id="exemple-carte-paiement-aco" class="exemple-carte-paiement-title collapsible-section-title" aria-expanded="false"> Paiement ou consignation d'une Amende Forfaitaire Délictuelle </div><!---->
+            </div>
+            <div _ngcontent-xwd-c37="">
+              <div _ngcontent-xwd-c37="" id="exemple-carte-paiement-aco" class="exemple-carte-paiement-title collapsible-section-title" aria-expanded="false"> Paiement ou consignation d'une Amende Forfaitaire Majorée Délictuelle </div><!---->
+            </div>
+            <div _ngcontent-xwd-c37="">
+              <div _ngcontent-xwd-c37="" id="exemple-carte-paiement-aco" class="exemple-carte-paiement-title collapsible-section-title" aria-expanded="false"> Paiement ou consignation d'un Forfait de Post-Stationnement Majoré </div><!---->
+            </div><!---->
+          </section>
+          <section _ngcontent-xwd-c37="" class="autre">
+            <h3 _ngcontent-xwd-c37="">Les autres moyens de payer à distance :</h3>
+            <ul _ngcontent-xwd-c37="" class="moyens">
+              <li _ngcontent-xwd-c37=""><a _ngcontent-xwd-c37="" class="application modal-trigger" title="Payer par l'application mobile" href="javascript:void(0);">Par l'application mobile</a></li>
+              <li _ngcontent-xwd-c37=""><a _ngcontent-xwd-c37="" class="telephone modal-trigger" title="Payer par téléphone" href="javascript:void(0);">Par téléphone</a></li>
+            </ul>
+          </section>
+        </main><generic-modal _ngcontent-xwd-c37="" _nghost-xwd-c33="">
+          <div _ngcontent-xwd-c33="" aria-labelledby="modal-title" tabindex="-1" aria-modal="true" role="dialog" class="modal fade">
+            <div _ngcontent-xwd-c33="" class="modal-dialog modal-lg">
+              <div _ngcontent-xwd-c33="" class="modal-content">
+                <div _ngcontent-xwd-c33="" class="modal-header"><button _ngcontent-xwd-c33="" title="FERMER"><span _ngcontent-xwd-c33="" aria-hidden="true">×</span></button>
+                  <h4 _ngcontent-xwd-c33="" id="modal-title"></h4>
+                </div>
+                <div _ngcontent-xwd-c33="" class="modal-body">
+                  <div _ngcontent-xwd-c33=""></div><!---->
+                </div>
+                <div _ngcontent-xwd-c33="" class="modal-footer"><button _ngcontent-xwd-c33="" type="button" data-dismiss="modal" class="btn btn-default" title="null">FERMER</button></div><!---->
+              </div>
+            </div>
+          </div>
+        </generic-modal>
+      </tai-accueil><!----></div><tai-footer>
+      <footer role="contentinfo" class="no-print">
+        <div class="block-container wrapper">
+          <div class="block-item">
+            <h3>Informations</h3>
+            <ul>
+              <li><a href="https://amendepaiement.fr/tai/aide">Aide sur le site</a></li>
+              <li><a href="https://amendepaiement.fr/tai/plan">Plan du site</a></li>
+              <li><a href="https://amendepaiement.fr/tai/confidentialite"> Confidentialité / Informations personnelles / Cookies et autres traceurs</a></li>
+              <li><a href="https://amendepaiement.fr/tai/securite">Sécurité informatique</a></li>
+              <li><a href="https://amendepaiement.fr/tai/glossaire">Glossaire</a></li>
+              <li><a href="https://amendepaiement.fr/tai/faq">Foire aux questions</a></li><!---->
+            </ul>
+          </div>
+          <div class="block-item">
+            <h3>Qualité de service</h3>
+            <ul>
+              <li><a href="https://amendepaiement.fr/tai/accessibilite">Accessibilité : Conformité partielle</a></li>
+              <li><a href="https://amendepaiement.fr/tai/engagement">Les engagements de la DGFiP</a></li>
+            </ul>
+          </div>
+          <div class="block-item">
+            <h3>Autres sites</h3>
+            <ul>
+              <li><a class="link-external" title="antai.gouv.fr - Nouvelle fenêtre" href="https://www.antai.gouv.fr/">ANTAI : Agence nationale de traitement automatisé des infractions</a></li>
+              <li><a href="https://stationnement.gouv.fr/" class="link-external" title="stationnement.gouv.fr - Nouvelle fenêtre">Forfait post-stationnement</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-external-sites">
+          <ul>
+            <li><a href="https://www.service-public.fr/" class="link-external" title="service-public.fr - Nouvelle fenêtre">Service-public.fr</a></li>
+            <li><a href="https://www.legifrance.gouv.fr/" class="link-external" title="legifrance.gouv.fr - Nouvelle fenêtre">Legifrance.gouv.fr</a></li>
+          </ul>
+        </div>
+        <div class="footer-copyright">
+          <p> © Direction générale des Finances publiques - <a id="mention-legales" class="xt" href="https://amendepaiement.fr/tai/mention-legales">Mentions légales</a></p>
+        </div>
+      </footer>
+    </tai-footer>
+  </cnt-tai-app>
+  <script>
+    document.getElementById('loading').style.display = "block"
+  </script>
+  <script src="runtime-es2017.cf3238a554b19a10cb82.html" type="module"></script>
+  <script src="runtime-es5.cf3238a554b19a10cb82.html" nomodule="" defer=""></script>
+  <script src="polyfills-es5.51e9a6fe87a068e0d2ab.html" nomodule="" defer=""></script>
+  <script src="polyfills-es2017.533ebfade82697eddcf6.html" type="module"></script>
+  <script src="main-es2017.3f346dd5d8d0c431d6e2.html" type="module"></script>
+  <script src="main-es5.3f346dd5d8d0c431d6e2.html" nomodule="" defer=""></script>
+
+</body>
+
+</html>

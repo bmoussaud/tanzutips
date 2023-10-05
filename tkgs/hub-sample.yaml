@@ -1,21 +1,21 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: srvclb-ngnx
+  name: hub-srvclb-ngnx
 spec:
   selector:
     app: hello
     tier: frontend
   ports:
-    - protocol: "TCP"
-      port: 80
-      targetPort: 80
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
   type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loadbalancer
+  name: hub-loadbalancer
 spec:
   replicas: 2
   selector:
@@ -27,6 +27,9 @@ spec:
         app: hello
         tier: frontend
     spec:
+      imagePullSecrets:
+      - name: dockhub-registry  
       containers:
-        - name: nginx
-          image: harborpoc.h2o-4-18157.h2o.vmware.com/library/nginx-photon:v2.8.2_vmware.2
+      - name: nginx
+        image: "docker.io/library/nginx:latest"
+      

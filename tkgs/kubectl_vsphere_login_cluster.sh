@@ -1,3 +1,4 @@
+set -x
 # usage VSPHERE_CLUSTER=bmoussaud VSPHERE_ADDRESS=172.17.12.128 VSPHERE_PASSWORD=xxxxx ./kubectl_vsphere_login_cluster.sh
 export VSPHERE_USERNAME=${VSPHERE_USERNAME:-administrator@vsphere.local }
 export VSPHERE_ADDRESS=${VSPHERE_ADDRESS:-10.213.163.64}

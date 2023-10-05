@@ -1,0 +1,219 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: extension-manager
+    tmc-extension: "true"
+    controller-tools.k8s.io: "1.0"
+    "pod-security.kubernetes.io/enforce": "privileged"
+    "pod-security.kubernetes.io/enforce-version": "latest"
+    "pod-security.kubernetes.io/audit": "privileged"
+    "pod-security.kubernetes.io/audit-version": "latest"
+    "pod-security.kubernetes.io/warn": "privileged"
+    "pod-security.kubernetes.io/warn-version": "latest"
+  name: vmware-system-tmc
+---
+apiVersion: v1
+data:
+  cluster_name: tkgs-cluster-1-proxy
+  cluster_rid: rid:c:fea0ee4b-bbf6-4444-b1d6-e493597d46a4:attached:attached:tkgs-cluster-1-proxy
+  management_cluster_name: attached
+  org_id: fea0ee4b-bbf6-4444-b1d6-e493597d46a4
+  provisioner_name: attached
+  resource_uid: c:01HBBST45VTSQ3NM2KN82M2P9J
+  stack_type: tmc
+  tls.crt: |
+    -----BEGIN CERTIFICATE-----
+    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
+    -----END CERTIFICATE-----
+  tmc_host: tanzuemea.tmc.cloud.vmware.com
+  tmc_url: https://tanzuemea.tmc.cloud.vmware.com
+kind: ConfigMap
+metadata:
+  labels:
+    tmc.cloud.vmware.com/managed: "true"
+  name: stack-config
+  namespace: vmware-system-tmc
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tmc-access-secret
+  namespace: vmware-system-tmc
+  labels:
+    tmc.cloud.vmware.com/managed: "true"
+type: Opaque
+data:
+ access_token_info : "ZXlKaFkyTmxjM05mZEc5clpXNGlPaUoyTVdGblpXNTBMbGxvTlVKeWFEZFBWRTV4VVVWamVtZEZURGxvT1dsVU5UaHpWazkxT1hKUVJuTnZTR0ZFYUZCM2QxazBlR2xPTFZvMVprMVRSV296WVU5RmVIbERWM0VpZlE9PQ=="
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: tmc-bootstrapper
+    tmc.cloud.vmware.com/managed: "true"
+  name: tmc-bootstrapper
+  namespace: 'vmware-system-tmc'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: tmc-bootstrapper
+    tmc.cloud.vmware.com/managed: "true"
+  name: tmc-bootstrapper
+  namespace: 'vmware-system-tmc'
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: tmc-bootstrapper
+    tmc.cloud.vmware.com/managed: "true"
+  name: tmc-bootstrapper
+  namespace: 'vmware-system-tmc'
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tmc-bootstrapper
+subjects:
+  - kind: ServiceAccount
+    name: tmc-bootstrapper
+    namespace: 'vmware-system-tmc'
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: tmc-bootstrapper
+    tmc.cloud.vmware.com/managed: "true"
+  name: tmc-bootstrapper
+  namespace: 'vmware-system-tmc'
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: tmc-bootstrapper
+        tmc.cloud.vmware.com/managed: "true"
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+      containers:
+        - args:
+            - --server=$(TMC_HOST):443
+            - --server-name=$(TMC_HOST)
+            - --tmc-ca=/etc/tmc/ca.crt
+            - --cluster-id=$(CLUSTER_RESOURCE_ID)
+            - --connect-timeout=100s
+            - --metrics-bind-port=0
+            - --cluster-type=workload
+          command:
+            - /bin/manager
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: TMC_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: tmc_host
+                  name: stack-config
+            - name: CLUSTER_RESOURCE_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: cluster_rid
+                  name: stack-config
+            - name: CLUSTER_TYPE
+              value: workload
+          image: 'extensions.aws-usw2.tmc.cloud.vmware.com/extensions/tmc-bootstrapper/manager@sha256:a7a2647fee8d944469a6b528b81d27750957178d1e18ea61c21e80ed709d5ff8'
+          imagePullPolicy: Always
+          name: manager
+          resources:
+            limits:
+              cpu: 10m
+              memory: 64Mi
+            requests:
+              cpu: 0m
+              memory: 0Mi
+          volumeMounts:
+            - mountPath: /etc/tmc
+              name: tmc-root-ca
+              readOnly: true
+      restartPolicy: Never
+      serviceAccountName: tmc-bootstrapper
+      tolerations:
+        - operator: Exists
+      volumes:
+        - configMap:
+            items:
+              - key: tls.crt
+                path: ca.crt
+            name: stack-config
+          name: tmc-root-ca
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tmc-proxy-secret
+  namespace: vmware-system-tmc
+  annotations:
+    tmc.cloud.vmware.com/proxy_type: explicit
+  labels:
+    tmc.cloud.vmware.com/managed: "true"
+type: Opaque
+data:
+  http-url: aHR0cDovL3Byb3h5Lmgyby00LTE4MTU3Lmgyby52bXdhcmUuY29tOjg4ODg=
+  HTTP_PROXY: aHR0cDovL3Byb3h5Lmgyby00LTE4MTU3Lmgyby52bXdhcmUuY29tOjg4ODg=
+  HTTPS_PROXY: aHR0cDovL3Byb3h5Lmgyby00LTE4MTU3Lmgyby52bXdhcmUuY29tOjg4ODg=

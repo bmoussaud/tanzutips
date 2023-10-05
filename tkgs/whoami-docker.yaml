@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: srvclb-ngnx
+  name: srvclb-whoami
 spec:
   selector:
     app: hello
@@ -12,10 +12,12 @@ spec:
       targetPort: 80
   type: LoadBalancer
 ---
+#kubectl create secret docker-registry regcred  --docker-username=bmoussaud --docker-password=dckr_pat_1qwNLCQ7k85nCN1zQdfcv96BdSg
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loadbalancer
+  name: whoami
 spec:
   replicas: 2
   selector:
@@ -29,4 +31,8 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: harborpoc.h2o-4-18157.h2o.vmware.com/library/nginx-photon:v2.8.2_vmware.2
+          image: containous/whoami
+          imagePullPolicy: Always
+      imagePullSecrets:
+      - name: regcred
+

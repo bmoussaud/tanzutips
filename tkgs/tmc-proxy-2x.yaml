@@ -1,0 +1,11 @@
+apiVersion: installers.tmc.cloud.vmware.com/v1alpha1
+kind: AgentInstall
+metadata:
+  name: tmc-agent-installer-config
+  namespace: svc-tmc-c8
+  annotations:
+    tmc.cloud.vmware.com/bootstrap-token: "djFhZ2VudC5Cb09DcUczV1JMcXBPNFM5MVpBa0RwVndYbjZLbzlDMXhVQWNwdzgxVk5Eamo5MTVsakhuRHpGUDJDM3BhWERX"
+spec:
+  operation: INSTALL
+  registrationLink: "https://tanzuemea.tmc.cloud.vmware.com/agent/v1alpha1/managementclusters:manifest/mc:01HBDHN2ZFTR724BZP6CYRZH7Q"
+---

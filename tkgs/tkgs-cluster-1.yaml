@@ -24,6 +24,10 @@ spec:
         network:
           cni:
             name: antrea
+          proxy:
+            httpProxy: http://10.214.182.91:3128
+            httpsProxy: http://10.214.182.91:3128
+            noProxy: [10.214.182.0/16,192.168.39.0/20, 10.220.0.0/20, 10.96.0.0/16]
           trust:
             additionalTrustedCAs:
               - name: harborpoc.h2o-4-18157.h2o.vmware.com
