@@ -7,7 +7,7 @@ Deploy the latest version`who-ami` application from the docker hub. Configure Ta
 1. Forbidden the latest tag
 1. Allow only deployment from a customer local registry.
 
-# Scenario #1
+# Scenario #1 No-Latest
 
 1. In the K8S cluster, Deploy The app
 
@@ -148,6 +148,20 @@ whoami-5484f8fb5d-pdcmh   1/1     Running             0          3s
 whoami-5484f8fb5d-cfq89   1/1     Running             0          5s
 ```
 
-As soon as the replication set is recreate by the deployment, the `no-latest` policy does not apply anymore and the pods can be scheduled.
+As soon as the replication set is deleted, the K8S scheduler recreates it the deployment, the `no-latest` policy does not apply anymore and the pods can be scheduled.
 
 
+7. Let's set a version. The image has now a version, `containous/whoami:v1.5.0`, even if we set `env=production` label, as the image has a version everything is ok
+```
+❯ kubectl label ns demo-registry-policy --overwrite env=production
+namespace/demo-registry-policy labeled
+
+❯ kubectl patch deployment whoami -n demo-registry-policy  -p \
+  '{"spec":{"template":{"spec":{"containers":[{"name":"nginx","image":"containous/whoami:v1.5.0"}]}}}}'
+deployment.apps/whoami patched
+
+❯ kubectl get pods -w -n demo-registry-policy
+NAME                      READY   STATUS    RESTARTS   AGE
+whoami-7bc56dcdcc-85zr5   1/1     Running   0          38s
+whoami-7bc56dcdcc-xtmct   1/1     Running   0          35s
+```
