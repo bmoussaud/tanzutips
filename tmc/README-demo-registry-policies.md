@@ -165,3 +165,56 @@ NAME                      READY   STATUS    RESTARTS   AGE
 whoami-7bc56dcdcc-85zr5   1/1     Running   0          38s
 whoami-7bc56dcdcc-xtmct   1/1     Running   0          35s
 ```
+
+
+# Scenario #2
+
+1. Create a new registry policy, kind custom, to enforces images to match at least one combination of hostname, image name, along with optional tag or digest specified by rules
+
+In the definition below we 
+![ ](img/6.png)
+
+2. Delete the replication set to trigger the policy
+
+```
+❯ kubectl delete -n demo-registry-policy rs --all
+replicaset.apps "whoami-5484f8fb5d" deleted
+
+❯ kubectl get pods -w -n demo-registry-policy
+NAME                      READY   STATUS    RESTARTS   AGE
+whoami-7bc56dcdcc-85zr5   1/1     Running   0          72m
+whoami-7bc56dcdcc-xtmct   1/1     Running   0          72m
+whoami-7bc56dcdcc-85zr5   1/1     Terminating   0          73m
+whoami-7bc56dcdcc-xtmct   1/1     Terminating   0          73m
+whoami-7bc56dcdcc-xtmct   0/1     Terminating   0          73m
+whoami-7bc56dcdcc-xtmct   0/1     Terminating   0          73m
+whoami-7bc56dcdcc-xtmct   0/1     Terminating   0          73m
+whoami-7bc56dcdcc-85zr5   0/1     Terminating   0          73m
+whoami-7bc56dcdcc-85zr5   0/1     Terminating   0          73m
+whoami-7bc56dcdcc-85zr5   0/1     Terminating   0          73m
+```
+
+The pods are deleted but not recreated.
+
+```
+➜ k get rs -n demo-registry-policy   -w
+NAME                DESIRED   CURRENT   READY   AGE
+whoami-7bc56dcdcc   2         0         0       74s
+
+
+❯ k describe rs -n demo-registry-policy   whoami-7bc56dcdcc
+Name:           whoami-7bc56dcdcc
+Namespace:      demo-registry-policy
+....
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  ReplicaFailure   True    FailedCreate
+Events:
+  Type     Reason        Age                 From                   Message
+  ----     ------        ----                ----                   -------
+  Warning  FailedCreate  17s (x15 over 99s)  replicaset-controller  Error creating: admission webhook "validation.gatekeeper.sh" denied the request: [tmc.wsp.demo-registry-policy.only-image-from-my-local-registry] container <nginx> has an invalid image reference <containous/whoami:v1.5.0>. allowed image patterns are: {hostname: [harborpoc.h2o-4-18157.h2o.vmware.com], image name: []}
+```
+
+The event tells the TMC policy allows the images from the  `harborpoc.h2o-4-18157.h2o.vmware.com` host only.
+
