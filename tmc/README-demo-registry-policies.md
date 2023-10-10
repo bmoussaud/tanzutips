@@ -93,24 +93,7 @@ Selector:       app=hello,pod-template-hash=5484f8fb5d
 Labels:         app=hello
                 pod-template-hash=5484f8fb5d
                 tier=frontend
-Annotations:    deployment.kubernetes.io/desired-replicas: 2
-                deployment.kubernetes.io/max-replicas: 3
-                deployment.kubernetes.io/revision: 1
-Controlled By:  Deployment/whoami
-Replicas:       0 current / 2 desired
-Pods Status:    0 Running / 0 Waiting / 0 Succeeded / 0 Failed
-Pod Template:
-  Labels:  app=hello
-           pod-template-hash=5484f8fb5d
-           tier=frontend
-  Containers:
-   nginx:
-    Image:        containous/whoami:latest
-    Port:         <none>
-    Host Port:    <none>
-    Environment:  <none>
-    Mounts:       <none>
-  Volumes:        <none>
+....
 Conditions:
   Type             Status  Reason
   ----             ------  ------
@@ -125,7 +108,7 @@ Events:
 
 The last message tells us why there is no pod running in the namespace
 
-in Tanzu Mission Control, the ui give the same message
+in Tanzu Mission Control, the ui provides the same message
 
 ![ ](img/5.png)
 
@@ -217,4 +200,7 @@ Events:
 ```
 
 The event tells the TMC policy allows the images from the  `harborpoc.h2o-4-18157.h2o.vmware.com` host only.
+
+Tanzu Mission Control UI displays the Policy Insights
+![ ](img/7.png)
 
