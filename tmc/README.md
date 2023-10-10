@@ -52,3 +52,11 @@ kubectl --kubeconfig=.localkubeconfig get namespaces
 ````
 tmc cluster delete -m $(MANAGEMENT_CLUSTER) -p $(PROVISIONER) $(CLUSTER)
 ````
+
+## Troobleshoot 
+
+### Policies
+
+```
+kubectl get validatingwebhookconfigurations gatekeeper-validating-webhook-configuration
+``````
