@@ -1,13 +1,10 @@
-Demo Tanzu Mission Control quota policies
+# Demo Tanzu Mission Control quota policies
 
-# Purpose
+## Purpose
 
-Deploy the latest version`who-ami` application from the docker hub. Configure Tanzu Mission Control to set 2 policies
+Deploy the latest version`who-ami` application from the docker hub. Configure Tanzu Mission Control to set 1 quota policies
 
-1. Forbidden the latest tag
-1. Allow only deployment from a customer local registry.
-
-# Scenario #1 Small Quota
+## Scenario #1 Small Quota
 
 1. In the K8S cluster, Deploy The app
 
@@ -15,7 +12,7 @@ Deploy the latest version`who-ami` application from the docker hub. Configure Ta
 kubectl apply -f demo-quota-policies.yaml
 ```
 
-4. In TMC, create a `tee-shirt-small`quota policy that applys only on the namespace having a `env=production` label associated to a cluster group.
+2. In TMC, create a `tee-shirt-small`quota policy that applyies only on the namespace having a `env=production` label associated to a cluster group.
 
 ![ ](img/1.png)
 
@@ -30,13 +27,13 @@ owner: bmoussaud
 ```
 
 ```
-➜ kubectl get deployments.apps -n demo-quota-policies                                                                                                                          
+➜ kubectl get deployments.apps -n demo-quota-policies
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
 whoami   0/2     0            0           16s
 ```
 
 ```
-➜ kubectl get deployments.apps -n demo-quota-policies -o yaml whoami | yq .status.conditions                                                                                   
+➜ kubectl get deployments.apps -n demo-quota-policies -o yaml whoami | yq .status.conditions
 - lastTransitionTime: "2023-10-10T13:15:06Z"
   lastUpdateTime: "2023-10-10T13:15:06Z"
   message: Created new replica set "whoami-5c774c77f7"
@@ -55,4 +52,41 @@ whoami   0/2     0            0           16s
   reason: FailedCreate
   status: "True"
   type: ReplicaFailure
+```
+
+3. Change the label on the namespace to turn the namespace into a dev namespace
+
+```
+❯ kubectl label ns demo-quota-policies --overwrite env=dev
+namespace/demo-quota-policies labeled
+```
+
+4. Delete the replication set
+
+```
+➜ kubectl delete rs -n demo-quota-policies --all
+replicaset.apps "whoami-5c774c77f7" deleted
+```
+
+5. Check the apps is now up & running
+
+```
+➜ kubectl get deployments.apps -n demo-quota-policies -o yaml whoami | yq .status.conditions
+- lastTransitionTime: "2023-10-10T13:29:19Z"
+  lastUpdateTime: "2023-10-10T13:29:19Z"
+  message: Deployment has minimum availability.
+  reason: MinimumReplicasAvailable
+  status: "True"
+  type: Available
+- lastTransitionTime: "2023-10-10T13:29:17Z"
+  lastUpdateTime: "2023-10-10T13:29:19Z"
+  message: ReplicaSet "whoami-5c774c77f7" has successfully progressed.
+  reason: NewReplicaSetAvailable
+  status: "True"
+```
+
+```
+➜ kubectl get deployments.apps -n demo-quota-policies  whoami
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+whoami   2/2     2            2           15m
 ```
