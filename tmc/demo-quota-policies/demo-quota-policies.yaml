@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-quota-policies
+  labels:
+    app: demo
+    owner: bmoussaud
+    env: production
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: srvclb-whoami
+  namespace: demo-quota-policies
+spec:
+  selector:
+    app: hello
+    tier: frontend
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+#kubectl create secret docker-registry regcred  --docker-username=bmoussaud --docker-password=dckr_pat_1qwNLCQ7k85nCN1zQdfcv96BdSg
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+  namespace: demo-quota-policies
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJibW91c3NhdWQiLCJwYXNzd29yZCI6ImRja3JfcGF0XzFxd05MQ1E3azg1bkNOMXpRZGZjdjk2QmRTZyIsImF1dGgiOiJZbTF2ZFhOellYVmtPbVJqYTNKZmNHRjBYekZ4ZDA1TVExRTNhemcxYmtOT01YcFJaR1pqZGprMlFtUlRadz09In19fQ==
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+  namespace: demo-quota-policies
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: containous/whoami:latest          
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "1000m"
+            limits:
+              cpu: "2000m"
+      imagePullSecrets:
+        - name: regcred

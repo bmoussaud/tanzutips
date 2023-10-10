@@ -1,13 +1,13 @@
-Demo Tanzu Mission Control registry policies
+# Demo Tanzu Mission Control registry policies
 
-# Purpose
+## Purpose
 
 Deploy the latest version`who-ami` application from the docker hub. Configure Tanzu Mission Control to set 2 policies
 
 1. Forbidden the latest tag
 1. Allow only deployment from a customer local registry.
 
-# Scenario #1 No-Latest
+## Scenario #1 No-Latest
 
 1. In the K8S cluster, Deploy The app
 
@@ -43,10 +43,7 @@ app: demo
 env: production
 kubernetes.io/metadata.name: demo-registry-policy
 owner: bmoussaud
-tmc.cloud.vmware.com/crd-type: tmc-managed
-tmc.cloud.vmware.com/creator: bmoussaud
-tmc.cloud.vmware.com/managed: "true"
-tmc.cloud.vmware.com/workspace: bmoussaud-demo
+...
 ```````
 
 ![ ](img/4.png)
@@ -150,7 +147,7 @@ whoami-7bc56dcdcc-xtmct   1/1     Running   0          35s
 ```
 
 
-# Scenario #2
+## Scenario #2
 
 1. Create a new registry policy, kind custom, to enforces images to match at least one combination of hostname, image name, along with optional tag or digest specified by rules
 
