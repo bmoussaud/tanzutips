@@ -54,6 +54,8 @@ whoami   0/2     0            0           16s
   type: ReplicaFailure
 ```
 
+![ ](img/2.png)
+
 3. Change the label on the namespace to turn the namespace into a dev namespace
 
 ```
