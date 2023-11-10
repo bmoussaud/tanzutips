@@ -1,7 +1,7 @@
 apiVersion: run.tanzu.vmware.com/v1alpha2
 kind: TanzuKubernetesCluster
 metadata:
-  name: tkgs-cluster-2
+  name: tkgs-cluster-3
   namespace: dev
 spec:
   topology:
