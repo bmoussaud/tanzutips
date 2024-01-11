@@ -3,7 +3,7 @@ CLUSTER_NAME=aks-east-coast-2
 LOCATION=francecentral
 REGISTRY_NAME=$(shell echo $(subst -,,$(CLUSTER_NAME)-Registry) | tr '[:upper:]' '[:lower:]') 
 REGISTRY_SP_NAME=$(CLUSTER_NAME)-acr 
-KUBERNETES_VERSION=1.25.6
+KUBERNETES_VERSION=1.28.3
 
 login:
 	az login
@@ -20,7 +20,7 @@ delete-instance:
 # --uptime-sla Message: Base managed cluster SKU name is invalid. 'Basic' has been replaced by 'Base' since v2023-02-01.
 create-cluster: 	
 	az aks create -g $(CLUSTER_NAME) -n $(CLUSTER_NAME) --enable-managed-identity --node-count 4 --enable-addons monitoring --enable-msi-auth-for-monitoring --generate-ssh-keys --node-vm-size Standard_D8as_v4 --kubernetes-version $(KUBERNETES_VERSION) --enable-oidc-issuer --enable-workload-identity
-
+	
 get-cluster:
 	az aks show --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME)
 
