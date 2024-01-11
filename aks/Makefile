@@ -33,7 +33,7 @@ kubeconfig-admin:
 grant-permission: kubeconfig-admin
 	kubectl create clusterrolebinding tap-psp-rolebinding --group=system:authenticated --clusterrole=psp:privileged --kubeconfig ~/.kube/config-files/kubeconfig-admin-$(CLUSTER_NAME).yml 
 
-delete-cluster: delete-instance clean-kubeconfig
+delete-cluster: delete-instance delete-registry clean-kubeconfig 
 
 delete-rg-cli: 
 	az aks delete --resource-group $(CLUSTER_NAME) --name $(CLUSTER_NAME) 
